@@ -1,13 +1,15 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:home_maintenance/AppProvider.dart';
 import 'package:home_maintenance/auth/signup/SignupScreen.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:home_maintenance/database/databasehelper.dart';
 import 'package:home_maintenance/home/HomeScreen.dart';
 import 'package:home_maintenance/main.dart';
+import 'package:provider/provider.dart';
 
 class LoginScreen extends StatefulWidget {
   static const String routeName = 'login';
-
   @override
   _LoginScreenState createState() => _LoginScreenState();
 }
@@ -20,6 +22,7 @@ class _LoginScreenState extends State<LoginScreen> {
   final _loginFormKey = GlobalKey<FormState>();
   TextEditingController _emailController = TextEditingController();
   TextEditingController _passwordController = TextEditingController();
+  late AppProvider provider;
 
   @override
   void dispose() {
@@ -32,6 +35,7 @@ class _LoginScreenState extends State<LoginScreen> {
 
   @override
   Widget build(BuildContext context) {
+    provider = Provider.of<AppProvider>(context);
     return Scaffold(
       backgroundColor: MyThemeData.backgroundColor,
       body: Container(
@@ -131,7 +135,7 @@ class _LoginScreenState extends State<LoginScreen> {
                     TextButton(
                       onPressed: onClick,
                       child: Text(
-                        'Create New Account.',
+                        'You Don’t Have An Account?Sign Up.',
                         style: GoogleFonts.raleway(
                           color: MyThemeData.lightBlue,
                         ),
@@ -154,13 +158,18 @@ class _LoginScreenState extends State<LoginScreen> {
     });
     if (_loginFormKey.currentState?.validate() == true) {
       try {
-        await FirebaseAuth.instance.signInWithEmailAndPassword(
+        UserCredential userCredential=await FirebaseAuth.instance.signInWithEmailAndPassword(
             email: _emailController.text, password: _passwordController.text);
-        // pushReplacement
-        Navigator.pushReplacement(
-          context,
-          MaterialPageRoute(builder: (context) => HomeScreen()),
-        );
+        if(userCredential.user==null){
+          showErrorMessage('invalid credentials no user exist''with this email and password');
+        }else{
+          final userCollectionRef = getUserCollectionsWithConvert();
+          userCollectionRef.doc(userCredential.user!.uid)
+             .get()
+             .then((value) => provider.updateUser(value.data()));
+               Navigator.pushReplacementNamed(context, HomeScreen.routeName);
+        }
+
       } on FirebaseAuthException catch (e) {
         showErrorMessage(e.message ?? 'some thing went wrong please try again');
       } catch (e) {
@@ -190,13 +199,13 @@ class _LoginScreenState extends State<LoginScreen> {
   }
 
   void login() async {
-    if (_loginFormKey.currentState.validate() == true) {
+    if (_loginFormKey.currentState?.validate() == true) {
       signIn();
     }
   }
 
   void onClick() async {
-    Navigator.pushNamed(context, SignupScreen.routeName);
+    Navigator.pushReplacementNamed(context, SignupScreen.routeName);
   }
 
   void _togglePasswordView() {

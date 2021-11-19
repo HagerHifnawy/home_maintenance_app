@@ -1,5 +1,7 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:home_maintenance/home/fragments/HomeFragment.dart';
+import 'package:home_maintenance/home/fragments/ProfileFragment.dart';
+import 'package:home_maintenance/main.dart';
 
 class HomeScreen extends StatefulWidget {
   static const String routeName = 'home';
@@ -9,8 +11,43 @@ class HomeScreen extends StatefulWidget {
 }
 
 class _HomeScreenState extends State<HomeScreen> {
+  int selectedIndex=0;
   @override
   Widget build(BuildContext context) {
-    return Scaffold();
+    return Scaffold(
+      bottomNavigationBar: BottomNavigationBar(
+        currentIndex: selectedIndex,
+        showUnselectedLabels: false,
+          selectedIconTheme: IconThemeData(
+            color: MyThemeData.lightBlue,
+            size: 36
+          ),
+          selectedItemColor: Theme.of(context).primaryColor,
+          items: [
+            BottomNavigationBarItem(
+                icon: ImageIcon(AssetImage('assets/images/home.png')),
+                label: 'Home'),
+            BottomNavigationBarItem(
+                icon: ImageIcon(AssetImage('assets/images/profile.png')),
+                label: 'My Profile')
+          ],
+        onTap: onBottomNavigationItemSelected,
+      ),
+      body: Container(
+        child: getMainView(),
+      ),
+    );
   }
+  Widget getMainView(){
+    if(selectedIndex==0){
+      return HomeFragment();
+    }else
+      return ProfileFragment();
+  }
+  void onBottomNavigationItemSelected(int pos){
+    setState(() {
+      selectedIndex=pos;
+    });
+  }
+
 }

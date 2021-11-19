@@ -1,9 +1,14 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:home_maintenance/AppProvider.dart';
 import 'package:home_maintenance/auth/login/LoginScreen.dart';
+import 'package:home_maintenance/auth/signup/model/UserModel.dart';
+import 'package:home_maintenance/database/databasehelper.dart';
+import 'package:home_maintenance/home/HomeScreen.dart';
 import 'package:home_maintenance/main.dart';
+import 'package:provider/provider.dart';
 
 class SignupScreen extends StatefulWidget {
   static const String routeName = 'signup';
@@ -19,9 +24,11 @@ class _SignupScreenState extends State<SignupScreen> {
       phoneNumber = '',
       password = '',
       confirmPassword = '';
-
+late AppProvider provider;
   @override
   Widget build(BuildContext context) {
+     provider = Provider.of<AppProvider>(context);
+
     return Scaffold(
       backgroundColor: MyThemeData.backgroundColor,
       body: Container(
@@ -130,7 +137,7 @@ class _SignupScreenState extends State<SignupScreen> {
                   TextButton(
                     onPressed: onClick,
                     child: Text(
-                      'You Have an Account?Log in',
+                      'You Have an Account?Log In',
                       style: GoogleFonts.raleway(
                         color: MyThemeData.lightBlue,
                       ),
@@ -143,6 +150,7 @@ class _SignupScreenState extends State<SignupScreen> {
     );
   }
 
+  final dp = FirebaseFirestore.instance;
   text(var text1, text2, icon) {
     var textFormField = TextFormField(
       style: GoogleFonts.raleway(color: MyThemeData.lightBlue),
@@ -186,7 +194,7 @@ class _SignupScreenState extends State<SignupScreen> {
   bool isHiddenPassword = true;
   bool isLoading = false;
   void createAccount() {
-    if (_signupFormKey.currentState.validate() == true) {
+    if (_signupFormKey.currentState?.validate() == true) {
       signUp();
     }
   }
@@ -196,12 +204,27 @@ class _SignupScreenState extends State<SignupScreen> {
       isLoading = true;
     });
     try {
-      await FirebaseAuth.instance.createUserWithEmailAndPassword(
-          email: emailAddress, password: password);
+      UserCredential userCredential = await FirebaseAuth.instance
+          .createUserWithEmailAndPassword(
+              email: emailAddress, password: password);
       if (password != confirmPassword) {
         showErrorMessage('password does not match');
       } else
         showErrorMessage('User Registered Successfully');
+      final userCollectionRef = getUserCollectionsWithConvert();
+      final user =userModel(
+          name: name,
+          emailAddress: emailAddress,
+          phoneNumber: phoneNumber,
+          address: address,
+          uId: userCredential.user!.uid);
+      userCollectionRef.doc(user.uId).set(user).then((value){
+        //save user
+        provider.updateUser(user);
+        Navigator.pushReplacementNamed(context,HomeScreen.routeName);
+
+      }
+      );
     } on FirebaseAuthException catch (e) {
       showErrorMessage(e.message ?? 'some thing went wrong please try again');
     } catch (e) {
@@ -230,7 +253,7 @@ class _SignupScreenState extends State<SignupScreen> {
   }
 
   void onClick() {
-    Navigator.pushNamed(context, LoginScreen.routeName);
+    Navigator.pushReplacementNamed(context, LoginScreen.routeName);
   }
 
   void _togglePasswordView() {
