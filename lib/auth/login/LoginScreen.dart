@@ -121,6 +121,11 @@ class _LoginScreenState extends State<LoginScreen> {
                       },
                     ),
                     Padding(padding: EdgeInsets.only(top: 25)),
+                    isLoading
+                        ? Center(
+                      child: CircularProgressIndicator(),
+                    )
+                        :
                     ElevatedButton(
                       onPressed: login,
                       child: Text(

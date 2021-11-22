@@ -5,7 +5,6 @@ import 'package:flutter/widgets.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:home_maintenance/lastservices/LastServicesScreen.dart';
 import 'package:home_maintenance/main.dart';
-import 'package:home_maintenance/settings/SettingsScreen.dart';
 
 class ProfileFragment extends StatefulWidget {
   @override
@@ -46,7 +45,7 @@ class _ProfileFragmentState extends State<ProfileFragment> {
                     style: GoogleFonts.raleway(
                         fontSize: 20, color: MyThemeData.lightBlue),
                   ),
-                  Padding(padding: EdgeInsets.all(5)),
+                  Padding(padding: EdgeInsets.all(7)),
                   Text(emailAddress,
                       style: GoogleFonts.raleway(
                           fontSize: 20, color: MyThemeData.lightBlue)),
@@ -54,7 +53,7 @@ class _ProfileFragmentState extends State<ProfileFragment> {
               ),
             ),
           ),
-          Padding(padding: EdgeInsets.all(12)),
+          Padding(padding: EdgeInsets.all(15)),
           Container(
             padding: EdgeInsets.only(left: 20),
             child: Column(
@@ -65,13 +64,13 @@ class _ProfileFragmentState extends State<ProfileFragment> {
                   style: GoogleFonts.raleway(
                       fontSize: 35, color: MyThemeData.lightBlue),
                 ),
-                Padding(padding: EdgeInsets.all(12)),
+                Padding(padding: EdgeInsets.all(15)),
                 Text(
                   phoneNumber,
                   style: GoogleFonts.raleway(
                       fontSize: 35, color: MyThemeData.lightBlue),
                 ),
-                Padding(padding: EdgeInsets.all(12)),
+                Padding(padding: EdgeInsets.all(15)),
                 GestureDetector(
                   onTap: onClickLastServices,
                   child: Text(
@@ -81,11 +80,6 @@ class _ProfileFragmentState extends State<ProfileFragment> {
                   ),),
 
                 Padding(padding: EdgeInsets.all(12)),
-                GestureDetector(onTap: onClickSettings,child: Text(
-                  'Settings',
-                  style: GoogleFonts.raleway(
-                      fontSize: 35, color: MyThemeData.lightBlue),
-                ),)
 
               ],
             ),
@@ -115,9 +109,6 @@ class _ProfileFragmentState extends State<ProfileFragment> {
     );
   }
 
-  onClickSettings()async{
-    Navigator.pushNamed(context, SettingsScreen.routeName);
-  }
   onClickLastServices()async{
     Navigator.pushNamed(context, LastServicesScreen.routeName);
   }

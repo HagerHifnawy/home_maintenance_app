@@ -8,7 +8,6 @@ import 'package:home_maintenance/home/HomeScreen.dart';
 import 'package:home_maintenance/home/location/MapScreen.dart';
 import 'package:home_maintenance/lastservices/LastServicesScreen.dart';
 import 'package:home_maintenance/rating/RateScreen.dart';
-import 'package:home_maintenance/settings/SettingsScreen.dart';
 import 'package:provider/provider.dart';
 import 'auth/login/LoginScreen.dart';
 import 'auth/signup/SignupScreen.dart';
@@ -52,7 +51,6 @@ class MyApp extends StatelessWidget {
             CommentsScreen.routeName:(context) => CommentsScreen(),
             RateScreen.routeName: (context) => RateScreen(),
             LastServicesScreen.routeName:(context)=> LastServicesScreen(),
-            SettingsScreen.routeName:(context)=> SettingsScreen(),
           },
           initialRoute: LoginScreen.routeName,
         );

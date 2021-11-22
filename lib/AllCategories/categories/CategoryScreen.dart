@@ -50,7 +50,10 @@ class _CategoryScreenState extends State<CategoryScreen> {
             decoration: BoxDecoration(color: MyThemeData.white),
             child: Row(
               children: [
-                Image.asset ('assets/images/carpenter.png'),
+                Column(children: [
+                  CircleAvatar(radius: 40.0,backgroundImage:AssetImage ('assets/images/carpenter.png'),)
+                  ,Text('Carpenter'),
+                ],),
                 Spacer(),
                 Column(
                   children: [
@@ -97,8 +100,10 @@ class _CategoryScreenState extends State<CategoryScreen> {
                   decoration: BoxDecoration(color: MyThemeData.white),
                   child: Row(
                     children: [
-                      Image.asset ('assets/images/carpenter.png'),
-                      Spacer(),
+                      Column(children: [
+                        CircleAvatar(radius: 40.0,backgroundImage:AssetImage ('assets/images/carpenter.png'),)
+                        ,Text('Carpenter'),
+                      ],),                      Spacer(),
                       Column(
                         children: [
                           Text(name,
@@ -144,8 +149,10 @@ class _CategoryScreenState extends State<CategoryScreen> {
                   decoration: BoxDecoration(color: MyThemeData.white),
                   child: Row(
                     children: [
-                      Image.asset ('assets/images/carpenter.png'),
-                      Spacer(),
+                      Column(children: [
+                        CircleAvatar(radius: 40.0,backgroundImage:AssetImage ('assets/images/carpenter.png'),)
+                        ,Text('Carpenter'),
+                      ],),                      Spacer(),
                       Column(
                         children: [
                           Text(name,
@@ -191,8 +198,10 @@ class _CategoryScreenState extends State<CategoryScreen> {
                   decoration: BoxDecoration(color: MyThemeData.white),
                   child: Row(
                     children: [
-                      Image.asset ('assets/images/carpenter.png'),
-                      Spacer(),
+                      Column(children: [
+                        CircleAvatar(radius: 40.0,backgroundImage:AssetImage ('assets/images/carpenter.png'),)
+                        ,Text('Carpenter'),
+                      ],),                      Spacer(),
                       Column(
                         children: [
                           Text(name,
@@ -238,8 +247,10 @@ class _CategoryScreenState extends State<CategoryScreen> {
                   decoration: BoxDecoration(color: MyThemeData.white),
                   child: Row(
                     children: [
-                      Image.asset ('assets/images/carpenter.png'),
-                      Spacer(),
+                      Column(children: [
+                        CircleAvatar(radius: 40.0,backgroundImage:AssetImage ('assets/images/carpenter.png'),)
+                        ,Text('Carpenter'),
+                      ],),                      Spacer(),
                       Column(
                         children: [
                           Text(name,
@@ -285,8 +296,10 @@ class _CategoryScreenState extends State<CategoryScreen> {
                   decoration: BoxDecoration(color: MyThemeData.white),
                   child: Row(
                     children: [
-                      Image.asset ('assets/images/carpenter.png'),
-                      Spacer(),
+                      Column(children: [
+                        CircleAvatar(radius: 40.0,backgroundImage:AssetImage ('assets/images/carpenter.png'),)
+                        ,Text('Carpenter'),
+                      ],),                      Spacer(),
                       Column(
                         children: [
                           Text(name,
@@ -332,8 +345,10 @@ class _CategoryScreenState extends State<CategoryScreen> {
                   decoration: BoxDecoration(color: MyThemeData.white),
                   child: Row(
                     children: [
-                      Image.asset ('assets/images/carpenter.png'),
-                      Spacer(),
+                      Column(children: [
+                        CircleAvatar(radius: 40.0,backgroundImage:AssetImage ('assets/images/carpenter.png'),)
+                        ,Text('Carpenter'),
+                      ],),                      Spacer(),
                       Column(
                         children: [
                           Text(name,
@@ -379,8 +394,10 @@ class _CategoryScreenState extends State<CategoryScreen> {
                   decoration: BoxDecoration(color: MyThemeData.white),
                   child: Row(
                     children: [
-                      Image.asset ('assets/images/carpenter.png'),
-                      Spacer(),
+                      Column(children: [
+                        CircleAvatar(radius: 40.0,backgroundImage:AssetImage ('assets/images/carpenter.png'),)
+                        ,Text('Carpenter'),
+                      ],),                      Spacer(),
                       Column(
                         children: [
                           Text(name,
@@ -426,8 +443,10 @@ class _CategoryScreenState extends State<CategoryScreen> {
                   decoration: BoxDecoration(color: MyThemeData.white),
                   child: Row(
                     children: [
-                      Image.asset ('assets/images/carpenter.png'),
-                      Spacer(),
+                      Column(children: [
+                        CircleAvatar(radius: 40.0,backgroundImage:AssetImage ('assets/images/carpenter.png'),)
+                        ,Text('Carpenter'),
+                      ],),                      Spacer(),
                       Column(
                         children: [
                           Text(name,
@@ -473,8 +492,10 @@ class _CategoryScreenState extends State<CategoryScreen> {
                   decoration: BoxDecoration(color: MyThemeData.white),
                   child: Row(
                     children: [
-                      Image.asset ('assets/images/carpenter.png'),
-                      Spacer(),
+                      Column(children: [
+                        CircleAvatar(radius: 40.0,backgroundImage:AssetImage ('assets/images/carpenter.png'),)
+                        ,Text('Carpenter'),
+                      ],),                      Spacer(),
                       Column(
                         children: [
                           Text(name,

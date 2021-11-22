@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:home_maintenance/home/fragments/HomeFragment.dart';
 import 'package:home_maintenance/home/fragments/ProfileFragment.dart';
+import 'package:home_maintenance/home/fragments/SettingsFragment.dart';
 import 'package:home_maintenance/main.dart';
 
 class HomeScreen extends StatefulWidget {
@@ -29,7 +30,10 @@ class _HomeScreenState extends State<HomeScreen> {
                 label: 'Home'),
             BottomNavigationBarItem(
                 icon: ImageIcon(AssetImage('assets/images/profile.png')),
-                label: 'My Profile')
+                label: 'My Profile'),
+            BottomNavigationBarItem(
+                icon: Icon(Icons.settings),
+                label: 'Settings')
           ],
         onTap: onBottomNavigationItemSelected,
       ),
@@ -41,8 +45,12 @@ class _HomeScreenState extends State<HomeScreen> {
   Widget getMainView(){
     if(selectedIndex==0){
       return HomeFragment();
-    }else
+    }
+    if(selectedIndex==1){
       return ProfileFragment();
+    }
+    else
+      return SettingsFragment();
   }
   void onBottomNavigationItemSelected(int pos){
     setState(() {

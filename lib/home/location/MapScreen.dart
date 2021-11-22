@@ -18,8 +18,8 @@ class _MapScreenState extends State<MapScreen> {
   @override
   void initState()  {
     super.initState();
-      _determinePosition().then((position) async{
-       this.position=await position;
+      _determinePosition().then((position) {
+       this.position= position;
       setState(() {
         markers.add(Marker(
             markerId: MarkerId('myposition'),

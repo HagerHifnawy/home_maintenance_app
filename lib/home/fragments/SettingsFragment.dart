@@ -3,18 +3,18 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:home_maintenance/auth/login/LoginScreen.dart';
 import 'package:home_maintenance/lastservices/LastServicesScreen.dart';
 import 'package:home_maintenance/main.dart';
 import 'package:image_picker/image_picker.dart';
 
-class SettingsScreen extends StatefulWidget {
-  static const String routeName = 'settings';
+class SettingsFragment extends StatefulWidget {
 
   @override
-  SettingsScreenState createState() => SettingsScreenState();
+  SettingsFragmentState createState() => SettingsFragmentState();
 }
 
-class SettingsScreenState extends State<SettingsScreen> {
+class SettingsFragmentState extends State<SettingsFragment> {
   final ImagePicker _picker = ImagePicker();
   late File imagex;
   String name = '';
@@ -23,8 +23,9 @@ class SettingsScreenState extends State<SettingsScreen> {
   String phoneNumber = '';
   String userName = '';
   String userEmailAddress = '';
-
   String password = '';
+  String userAddress='';
+  String userPhoneNumber = '';
 
   @override
   void initState() {
@@ -106,7 +107,7 @@ class SettingsScreenState extends State<SettingsScreen> {
                     ),
                     Spacer(),
                     InkWell(
-                      onTap: updateUserName,
+                      onTap: updateUserAddress,
                       child: Icon(
                         Icons.edit,
                         color: MyThemeData.lightBlue,
@@ -125,7 +126,7 @@ class SettingsScreenState extends State<SettingsScreen> {
                     ),
                     Spacer(),
                     InkWell(
-                      onTap: updateUserName,
+                      onTap: updateUserPhoneNumber,
                       child: Icon(
                         Icons.edit,
                         color: MyThemeData.lightBlue,
@@ -144,7 +145,7 @@ class SettingsScreenState extends State<SettingsScreen> {
                     ),
                     Spacer(),
                     InkWell(
-                      onTap: updateUserName,
+                      onTap: updateUserPassword,
                       child: Icon(
                         Icons.edit,
                         color: MyThemeData.lightBlue,
@@ -157,7 +158,7 @@ class SettingsScreenState extends State<SettingsScreen> {
                 Center(
                   child: ElevatedButton.icon(
                     icon: Icon(Icons.logout),
-                    onPressed: onClickSettings,
+                    onPressed: onClickSignOut,
                     label: Text(
                       'Sign Out',
                       style: GoogleFonts.raleway(),
@@ -174,8 +175,8 @@ class SettingsScreenState extends State<SettingsScreen> {
     );
   }
 
-  onClickSettings() async {
-    Navigator.pushNamed(context, SettingsScreen.routeName);
+  onClickSignOut() async {
+    Navigator.pushReplacementNamed(context, LoginScreen.routeName);
   }
 
   onClickLastServices() async {
@@ -255,6 +256,44 @@ class SettingsScreenState extends State<SettingsScreen> {
           );
         });
   }
+  editUserAddress() {
+    showDialog(
+        context: context,
+        builder: (buildContext) {
+          return AlertDialog(
+            content: TextFormField(
+              style: GoogleFonts.raleway(color: MyThemeData.lightBlue),
+              onChanged: (newValue) {
+                userAddress = newValue;
+              },
+              decoration: InputDecoration(
+                  focusedBorder: UnderlineInputBorder(
+                      borderSide: BorderSide(color: MyThemeData.lightBlue)),
+                  hintStyle: TextStyle(color: MyThemeData.lightBlue),
+                  labelStyle: TextStyle(color: MyThemeData.lightBlue),
+                  floatingLabelBehavior: FloatingLabelBehavior.auto,
+                  fillColor: MyThemeData.lightBlue),
+            ),
+            actions: [
+              TextButton(
+                  onPressed: () {
+                    setState(() {
+                      address = userAddress;
+                      users
+                          .doc(user)
+                          .update({'address': userAddress})
+                          .then((value) => print("User Updated"))
+                          .catchError((error) =>
+                          print("Failed to update user: $error"));
+                    });
+                    Navigator.pop(context);
+                    print(userAddress);
+                  },
+                  child: Text('Done'))
+            ],
+          );
+        });
+  }
   editUserName() {
     showDialog(
         context: context,
@@ -283,7 +322,7 @@ class SettingsScreenState extends State<SettingsScreen> {
                           .update({'name': userName})
                           .then((value) => print("User Updated"))
                           .catchError((error) =>
-                              print("Failed to update user: $error"));
+                          print("Failed to update user: $error"));
                     });
                     Navigator.pop(context);
                     print(userName);
@@ -293,16 +332,89 @@ class SettingsScreenState extends State<SettingsScreen> {
           );
         });
   }
-
+  editUserPhoneNumber() {
+    showDialog(
+        context: context,
+        builder: (buildContext) {
+          return AlertDialog(
+            content: TextFormField(
+              style: GoogleFonts.raleway(color: MyThemeData.lightBlue),
+              onChanged: (newValue) {
+                userPhoneNumber = newValue;
+              },
+              decoration: InputDecoration(
+                  focusedBorder: UnderlineInputBorder(
+                      borderSide: BorderSide(color: MyThemeData.lightBlue)),
+                  hintStyle: TextStyle(color: MyThemeData.lightBlue),
+                  labelStyle: TextStyle(color: MyThemeData.lightBlue),
+                  floatingLabelBehavior: FloatingLabelBehavior.auto,
+                  fillColor: MyThemeData.lightBlue),
+            ),
+            actions: [
+              TextButton(
+                  onPressed: () {
+                    setState(() {
+                      phoneNumber = userPhoneNumber;
+                      users
+                          .doc(user)
+                          .update({'phoneNumber': userPhoneNumber})
+                          .then((value) => print("User Updated"))
+                          .catchError((error) =>
+                          print("Failed to update user: $error"));
+                    });
+                    Navigator.pop(context);
+                    print(userPhoneNumber);
+                  },
+                  child: Text('Done'))
+            ],
+          );
+        });
+  }
+  editUserPassword() {
+    showDialog(
+        context: context,
+        builder: (buildContext) {
+          return AlertDialog(
+            content: TextFormField(
+              style: GoogleFonts.raleway(color: MyThemeData.lightBlue),
+              onChanged: (newValue) {
+                FirebaseAuth.instance.currentUser!.updatePassword(newValue);
+              },
+              decoration: InputDecoration(
+                  focusedBorder: UnderlineInputBorder(
+                      borderSide: BorderSide(color: MyThemeData.lightBlue)),
+                  hintStyle: TextStyle(color: MyThemeData.lightBlue),
+                  labelStyle: TextStyle(color: MyThemeData.lightBlue),
+                  floatingLabelBehavior: FloatingLabelBehavior.auto,
+                  fillColor: MyThemeData.lightBlue),
+            ),
+            actions: [
+              TextButton(
+                  onPressed: () {
+                    Navigator.pop(context);
+                  },
+                  child: Text('Done'))
+            ],
+          );
+        });
+  }
   final dp = FirebaseFirestore.instance;
   final user = FirebaseAuth.instance.currentUser!.uid.toString();
   CollectionReference users = FirebaseFirestore.instance.collection('users');
-
+  Future<void> updateUserPassword() {
+    return editUserPassword();
+  }
   Future<void> updateUserName() {
     return editUserName();
   }
   Future<void> updateUserEmailAddress() {
     return editUserEmailAddress();
+  }
+  Future<void> updateUserAddress() {
+    return editUserAddress();
+  }
+  Future<void> updateUserPhoneNumber() {
+    return editUserPhoneNumber();
   }
   getCurrentUserData() async {
     FirebaseFirestore.instance
