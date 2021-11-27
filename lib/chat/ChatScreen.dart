@@ -3,7 +3,9 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:home_maintenance/main.dart';
+
 final fireStore = FirebaseFirestore.instance;
+final user = FirebaseAuth.instance.currentUser!.email;
 
 class ChatScreen extends StatefulWidget {
   static const String routeName = 'Chat';
@@ -13,8 +15,7 @@ class ChatScreen extends StatefulWidget {
 }
 
 class ChatScreenState extends State<ChatScreen> {
-  final messageTextController=TextEditingController();
-  final user = FirebaseAuth.instance.currentUser!.email;
+  final messageTextController = TextEditingController();
   String? messageText;
   @override
   Widget build(BuildContext context) {
@@ -50,7 +51,7 @@ class ChatScreenState extends State<ChatScreen> {
                   children: [
                     Expanded(
                         child: TextFormField(
-                          controller: messageTextController,
+                      controller: messageTextController,
                       onChanged: (newvalue) {
                         messageText = newvalue;
                       },
@@ -65,10 +66,9 @@ class ChatScreenState extends State<ChatScreen> {
                           color: MyThemeData.lightBlue,
                           onPressed: () {
                             messageTextController.clear();
-                            messagesStreams();
                             fireStore
                                 .collection('messages')
-                                .add({'text': messageText, 'sender': user});
+                                .add({'text': messageText, 'sender': user,'time':FieldValue.serverTimestamp()});
                           },
                           child: Icon(
                             Icons.send,
@@ -84,83 +84,90 @@ class ChatScreenState extends State<ChatScreen> {
         ));
   }
 
-  /*void getMessages()async {
-    final messages = await fireStore.collection('messages').get();
-    for(var message in messages.docs){
-      print(message.data());
-    }
-  }*/
-  void messagesStreams() async {
-    await for (var snapshot in fireStore.collection('messages').snapshots()) {
-      for (var message in snapshot.docs) {
-        print(message.data());
-      }
-    }
-  }
 }
+
 class MessageStreamBuilder extends StatelessWidget {
   const MessageStreamBuilder({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     return StreamBuilder<QuerySnapshot>(
-      stream: fireStore.collection('messages').snapshots(),
+      stream: fireStore.collection('messages').orderBy('time').snapshots(),
       builder: (context, snapshot) {
         List<MessageLine> massagewidgets = [];
         if (!snapshot.hasData) {}
-        final messages = snapshot.data!.docs;
+        final messages = snapshot.data!.docs.reversed;
         for (var message in messages) {
           final messageText = message.get('text');
           final messageSender = message.get('sender');
-          final messagewidget = MessageLine(sender: messageSender,text: messageText,);
+          final currentUser = user;
+          if (currentUser == messageSender) {}
+          final messagewidget = MessageLine(
+            sender: messageSender,
+            text: messageText,
+            isMe: currentUser == messageSender,
+          );
           massagewidgets.add(messagewidget);
         }
         return Expanded(
             child: ListView(
-              padding: EdgeInsets.symmetric(horizontal: 10.0,vertical: 20.0),
-              children: [
-                Column(
-                  children: massagewidgets,
-                )
-              ],
-            ));
+              reverse: true,
+          padding: EdgeInsets.symmetric(horizontal: 10.0, vertical: 20.0),
+          children: [
+            Column(
+              children: massagewidgets,
+            )
+          ],
+        ));
       },
     );
   }
 }
 
-
-
 class MessageLine extends StatelessWidget {
-  const MessageLine({this.text,this.sender ,Key? key}) : super(key: key);
-final String? sender;
+  const MessageLine({this.text, this.sender, required this.isMe, Key? key})
+      : super(key: key);
+  final String? sender;
   final String? text;
+  final bool isMe;
 
   @override
   Widget build(BuildContext context) {
-    return Padding(padding: EdgeInsets.all(10.0),
-    child: Column(
-      crossAxisAlignment: CrossAxisAlignment.end,
-      children: [
-      Text('$sender',style: GoogleFonts.raleway(fontSize: 10.0,color: MyThemeData.lightBlue),),
-      Material(
-      child: Align(
-        alignment: AlignmentDirectional.centerEnd,
-        child: Container(
-          padding:
-          EdgeInsets.symmetric(vertical: 5.0, horizontal: 10.0),
-          decoration: BoxDecoration(
-              color: MyThemeData.lightBlue,
-              borderRadius: BorderRadiusDirectional.only(
-                bottomStart: Radius.circular(10.0),
-                topEnd: Radius.circular(10.0),
-                topStart: Radius.circular(10.0),
-              )),
-          child: Text(
-            '$text',
-            style: GoogleFonts.raleway(color: MyThemeData.backgroundColor),
-          ),
-        ),
-      ),),],));
+    return Padding(
+        padding: EdgeInsets.all(10.0),
+        child: Column(
+          crossAxisAlignment: isMe?CrossAxisAlignment.end:CrossAxisAlignment.start,
+          children: [
+            Text(
+              '$sender',
+              style: GoogleFonts.raleway(
+                  fontSize: 10.0, color: MyThemeData.lightBlue),
+            ),
+            Material(
+              child: Align(
+                alignment: isMe?AlignmentDirectional.centerEnd:AlignmentDirectional.centerStart,
+                child: Container(
+                  padding:
+                      EdgeInsets.symmetric(vertical: 5.0, horizontal: 10.0),
+                  decoration: BoxDecoration(
+                      color: isMe?MyThemeData.lightBlue:MyThemeData.backgroundColor,
+                      borderRadius: isMe?BorderRadiusDirectional.only(
+                        bottomStart: Radius.circular(10.0),
+                        topEnd: Radius.circular(10.0),
+                        topStart: Radius.circular(10.0),
+                      ):BorderRadiusDirectional.only(
+                        bottomEnd: Radius.circular(10.0),
+                        topEnd: Radius.circular(10.0),
+                        topStart: Radius.circular(10.0),),),
+                  child: Text(
+                    '$text',
+                    style:
+                        GoogleFonts.raleway(color: isMe?MyThemeData.backgroundColor:MyThemeData.lightBlue),
+                  ),
+                ),
+              ),
+            ),
+          ],
+        ));
   }
 }

@@ -2,11 +2,11 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_phone_direct_caller/flutter_phone_direct_caller.dart';
+import 'package:flutter_rating_bar/flutter_rating_bar.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:home_maintenance/chat/ChatScreen.dart';
 import 'package:home_maintenance/comments/CommentsScreen.dart';
 import 'package:home_maintenance/main.dart';
-import 'package:home_maintenance/rating/RateScreen.dart';
 
 class CategoryScreen extends StatefulWidget {
   static const String routeName = 'category';
@@ -16,9 +16,12 @@ class CategoryScreen extends StatefulWidget {
 }
 
 class _CategoryScreenState extends State<CategoryScreen> {
+  double rating = 0;
+  double rating2 = 0;
+  double rating3 = 0;
   String name = 'Name';
   String message = 'Message';
-  String comments= 'Comments';
+  String comments = 'Comments';
   String rate = 'Rate';
   String phoneNumber = 'Phone Number';
   @override
@@ -45,508 +48,840 @@ class _CategoryScreenState extends State<CategoryScreen> {
             scrollDirection: Axis.vertical,
             child: Column(
               children: [
-            Container(
-            padding: EdgeInsets.only(right: 30, left: 30),
-            decoration: BoxDecoration(color: MyThemeData.white),
-            child: Row(
-              children: [
-                Column(children: [
-                  CircleAvatar(radius: 40.0,backgroundImage:AssetImage ('assets/images/carpenter.png'),)
-                  ,Text('Carpenter'),
-                ],),
-                Spacer(),
-                Column(
-                  children: [
-                    Text(name,
-                      style: GoogleFonts.raleway(fontSize: 15),
-                    ),
-                    GestureDetector(
-                      onTap: getPhoneNumber,
-                      child: Text(phoneNumber,
-                        style: GoogleFonts.raleway(fontSize: 15),
+                Container(
+                  padding: EdgeInsets.only(right: 30, left: 30),
+                  decoration: BoxDecoration(color: MyThemeData.white),
+                  child: Row(
+                    children: [
+                      Column(
+                        children: [
+                          CircleAvatar(
+                            radius: 40.0,
+                            backgroundImage:
+                                AssetImage('assets/images/carpenter.png'),
+                          ),
+                          Text(
+                            'Carpenter',
+                            style: GoogleFonts.raleway(
+                                color: MyThemeData.lightBlue),
+                          ),
+                        ],
                       ),
-                    ),
-                    GestureDetector(
-                      onTap: onClickMessage,
-                      child: Text(message,
-                        style: GoogleFonts.raleway(fontSize: 15),
+                      Spacer(),
+                      Column(
+                        children: [
+                          Text(
+                            name,
+                            style: GoogleFonts.raleway(
+                                fontSize: 15, color: MyThemeData.lightBlue),
+                          ),
+                          const SizedBox(
+                            height: 1,
+                          ),
+                          GestureDetector(
+                            onTap: onClickMessage,
+                            child: Text(
+                              message,
+                              style: GoogleFonts.raleway(
+                                  fontSize: 15, color: MyThemeData.lightBlue),
+                            ),
+                          ),
+                          const SizedBox(
+                            height: 1,
+                          ),
+                          GestureDetector(
+                              onTap: () => showRating(),
+                              child: Text(
+                                'Rate My Services',
+                                style: GoogleFonts.raleway(
+                                    fontSize: 15, color: MyThemeData.lightBlue),
+                              )),
+                          Text(
+                            'Rating $rating',
+                            style: GoogleFonts.raleway(
+                                fontSize: 15, color: MyThemeData.lightBlue),
+                          ),
+                          buildRating(),
+                          GestureDetector(
+                            onTap: onClickComments,
+                            child: Text(
+                              comments,
+                              style: GoogleFonts.raleway(
+                                  fontSize: 15, color: MyThemeData.lightBlue),
+                            ),
+                          ),
+                        ],
                       ),
-                    ),
-                    GestureDetector(
-                      onTap: onClickRate,
-                      child: Text(rate,
-                        style: GoogleFonts.raleway(fontSize: 15),
-                      ),
-                    ),
-                    GestureDetector(
-                      onTap: onClickComments,
-                      child: Text(comments,
-                        style: GoogleFonts.raleway(fontSize: 15),
-                      ),
-                    ),
-                  ],
+                      Spacer(),
+                      GestureDetector(
+                        onTap: getPhoneNumber,
+                        child: Icon(Icons.call),
+                      )
+                    ],
+                  ),
                 ),
-                Spacer(),
-                GestureDetector(
-                  onTap: onClickComments,
-                  child: Icon(Icons.add),
-                )
+                Padding(padding: EdgeInsets.only(top: 10)),
+                Container(
+                  padding: EdgeInsets.only(right: 30, left: 30),
+                  decoration: BoxDecoration(color: MyThemeData.white),
+                  child: Row(
+                    children: [
+                      Column(
+                        children: [
+                          CircleAvatar(
+                            radius: 40.0,
+                            backgroundImage:
+                                AssetImage('assets/images/carpenter.png'),
+                          ),
+                          Text(
+                            'Carpenter',
+                            style: GoogleFonts.raleway(
+                                color: MyThemeData.lightBlue),
+                          ),
+                        ],
+                      ),
+                      Spacer(),
+                      Column(
+                        children: [
+                          Text(
+                            name,
+                            style: GoogleFonts.raleway(
+                                fontSize: 15, color: MyThemeData.lightBlue),
+                          ),
+                          GestureDetector(
+                            onTap: onClickMessage,
+                            child: Text(
+                              message,
+                              style: GoogleFonts.raleway(
+                                  fontSize: 15, color: MyThemeData.lightBlue),
+                            ),
+                          ),
+                          const SizedBox(
+                            height: 1,
+                          ),
+                          GestureDetector(
+                              onTap: () => showRating2(),
+                              child: Text(
+                                'Rate My Services',
+                                style: GoogleFonts.raleway(
+                                    fontSize: 15, color: MyThemeData.lightBlue),
+                              )),
+                          Text(
+                            'Rating $rating2',
+                            style: GoogleFonts.raleway(
+                                fontSize: 15, color: MyThemeData.lightBlue),
+                          ),
+                          buildRating2(),
+                          GestureDetector(
+                            onTap: onClickComments,
+                            child: Text(
+                              comments,
+                              style: GoogleFonts.raleway(
+                                  fontSize: 15, color: MyThemeData.lightBlue),
+                            ),
+                          ),
+                        ],
+                      ),
+                      Spacer(),
+                      GestureDetector(
+                        onTap: getPhoneNumber,
+                        child: Icon(Icons.call),
+                      )
+                    ],
+                  ),
+                ),
+                Padding(padding: EdgeInsets.only(top: 10)),
+                Container(
+                  padding: EdgeInsets.only(right: 30, left: 30),
+                  decoration: BoxDecoration(color: MyThemeData.white),
+                  child: Row(
+                    children: [
+                      Column(
+                        children: [
+                          CircleAvatar(
+                            radius: 40.0,
+                            backgroundImage:
+                                AssetImage('assets/images/carpenter.png'),
+                          ),
+                          Text(
+                            'Carpenter',
+                            style: GoogleFonts.raleway(
+                                color: MyThemeData.lightBlue),
+                          ),
+                        ],
+                      ),
+                      Spacer(),
+                      Column(
+                        children: [
+                          Text(
+                            name,
+                            style: GoogleFonts.raleway(
+                                fontSize: 15, color: MyThemeData.lightBlue),
+                          ),
+                          GestureDetector(
+                            onTap: onClickMessage,
+                            child: Text(
+                              message,
+                              style: GoogleFonts.raleway(
+                                  fontSize: 15, color: MyThemeData.lightBlue),
+                            ),
+                          ),
+                          const SizedBox(
+                            height: 1,
+                          ),
+                          GestureDetector(
+                              onTap: () => showRating(),
+                              child: Text(
+                                'Rate My Services',
+                                style: GoogleFonts.raleway(
+                                    fontSize: 15, color: MyThemeData.lightBlue),
+                              )),
+                          Text(
+                            'Rating $rating3',
+                            style: GoogleFonts.raleway(
+                                fontSize: 15, color: MyThemeData.lightBlue),
+                          ),
+                          RatingBar.builder(
+                            initialRating: rating3,
+                            minRating: 1,
+                            itemBuilder: (context, _) => Icon(
+                              Icons.star,
+                              color: Colors.amber,
+                            ),
+                            updateOnDrag: true,
+                            itemSize: 20,
+                            onRatingUpdate: (rating) => setState(() {
+                              this.rating3 = rating;
+                            }),
+                          ),
+                          GestureDetector(
+                            onTap: onClickComments,
+                            child: Text(
+                              comments,
+                              style: GoogleFonts.raleway(
+                                  fontSize: 15, color: MyThemeData.lightBlue),
+                            ),
+                          ),
+                        ],
+                      ),
+                      Spacer(),
+                      GestureDetector(
+                        onTap: getPhoneNumber,
+                        child: Icon(Icons.call),
+                      )
+                    ],
+                  ),
+                ),
+                Padding(padding: EdgeInsets.only(top: 10)),
+                Container(
+                  padding: EdgeInsets.only(right: 30, left: 30),
+                  decoration: BoxDecoration(color: MyThemeData.white),
+                  child: Row(
+                    children: [
+                      Column(
+                        children: [
+                          CircleAvatar(
+                            radius: 40.0,
+                            backgroundImage:
+                                AssetImage('assets/images/carpenter.png'),
+                          ),
+                          Text(
+                            'Carpenter',
+                            style: GoogleFonts.raleway(
+                                color: MyThemeData.lightBlue),
+                          ),
+                        ],
+                      ),
+                      Spacer(),
+                      Column(
+                        children: [
+                          Text(
+                            name,
+                            style: GoogleFonts.raleway(
+                                fontSize: 15, color: MyThemeData.lightBlue),
+                          ),
+                          GestureDetector(
+                            onTap: onClickMessage,
+                            child: Text(
+                              message,
+                              style: GoogleFonts.raleway(
+                                  fontSize: 15, color: MyThemeData.lightBlue),
+                            ),
+                          ),
+                          const SizedBox(
+                            height: 1,
+                          ),
+                          GestureDetector(
+                              onTap: () => showRating(),
+                              child: Text(
+                                'Rate My Services',
+                                style: GoogleFonts.raleway(
+                                    fontSize: 15, color: MyThemeData.lightBlue),
+                              )),
+                          Text(
+                            'Rating $rating3',
+                            style: GoogleFonts.raleway(
+                                fontSize: 15, color: MyThemeData.lightBlue),
+                          ),
+                          RatingBar.builder(
+                            initialRating: rating3,
+                            minRating: 1,
+                            itemBuilder: (context, _) => Icon(
+                              Icons.star,
+                              color: Colors.amber,
+                            ),
+                            updateOnDrag: true,
+                            itemSize: 20,
+                            onRatingUpdate: (rating) => setState(() {
+                              this.rating3 = rating;
+                            }),
+                          ),
+                          GestureDetector(
+                            onTap: onClickComments,
+                            child: Text(
+                              comments,
+                              style: GoogleFonts.raleway(
+                                  fontSize: 15, color: MyThemeData.lightBlue),
+                            ),
+                          ),
+                        ],
+                      ),
+                      Spacer(),
+                      GestureDetector(
+                        onTap: getPhoneNumber,
+                        child: Icon(Icons.call),
+                      )
+                    ],
+                  ),
+                ),
+                Padding(padding: EdgeInsets.only(top: 10)),
+                Container(
+                  padding: EdgeInsets.only(right: 30, left: 30),
+                  decoration: BoxDecoration(color: MyThemeData.white),
+                  child: Row(
+                    children: [
+                      Column(
+                        children: [
+                          CircleAvatar(
+                            radius: 40.0,
+                            backgroundImage:
+                                AssetImage('assets/images/carpenter.png'),
+                          ),
+                          Text(
+                            'Carpenter',
+                            style: GoogleFonts.raleway(
+                                color: MyThemeData.lightBlue),
+                          ),
+                        ],
+                      ),
+                      Spacer(),
+                      Column(
+                        children: [
+                          Text(
+                            name,
+                            style: GoogleFonts.raleway(
+                                fontSize: 15, color: MyThemeData.lightBlue),
+                          ),
+                          GestureDetector(
+                            onTap: onClickMessage,
+                            child: Text(
+                              message,
+                              style: GoogleFonts.raleway(
+                                  fontSize: 15, color: MyThemeData.lightBlue),
+                            ),
+                          ),
+                          const SizedBox(
+                            height: 1,
+                          ),
+                          GestureDetector(
+                              onTap: () => showRating(),
+                              child: Text(
+                                'Rate My Services',
+                                style: GoogleFonts.raleway(
+                                    fontSize: 15, color: MyThemeData.lightBlue),
+                              )),
+                          Text(
+                            'Rating $rating3',
+                            style: GoogleFonts.raleway(
+                                fontSize: 15, color: MyThemeData.lightBlue),
+                          ),
+                          RatingBar.builder(
+                            initialRating: rating3,
+                            minRating: 1,
+                            itemBuilder: (context, _) => Icon(
+                              Icons.star,
+                              color: Colors.amber,
+                            ),
+                            updateOnDrag: true,
+                            itemSize: 20,
+                            onRatingUpdate: (rating) => setState(() {
+                              this.rating3 = rating;
+                            }),
+                          ),
+                          GestureDetector(
+                            onTap: onClickComments,
+                            child: Text(
+                              comments,
+                              style: GoogleFonts.raleway(
+                                  fontSize: 15, color: MyThemeData.lightBlue),
+                            ),
+                          ),
+                        ],
+                      ),
+                      Spacer(),
+                      GestureDetector(
+                        onTap: getPhoneNumber,
+                        child: Icon(Icons.call),
+                      )
+                    ],
+                  ),
+                ),
+                Padding(padding: EdgeInsets.only(top: 10)),
+                Container(
+                  padding: EdgeInsets.only(right: 30, left: 30),
+                  decoration: BoxDecoration(color: MyThemeData.white),
+                  child: Row(
+                    children: [
+                      Column(
+                        children: [
+                          CircleAvatar(
+                            radius: 40.0,
+                            backgroundImage:
+                                AssetImage('assets/images/carpenter.png'),
+                          ),
+                          Text(
+                            'Carpenter',
+                            style: GoogleFonts.raleway(
+                                color: MyThemeData.lightBlue),
+                          ),
+                        ],
+                      ),
+                      Spacer(),
+                      Column(
+                        children: [
+                          Text(
+                            name,
+                            style: GoogleFonts.raleway(
+                                fontSize: 15, color: MyThemeData.lightBlue),
+                          ),
+                          GestureDetector(
+                            onTap: onClickMessage,
+                            child: Text(
+                              message,
+                              style: GoogleFonts.raleway(
+                                  fontSize: 15, color: MyThemeData.lightBlue),
+                            ),
+                          ),
+                          const SizedBox(
+                            height: 1,
+                          ),
+                          GestureDetector(
+                              onTap: () => showRating(),
+                              child: Text(
+                                'Rate My Services',
+                                style: GoogleFonts.raleway(
+                                    fontSize: 15, color: MyThemeData.lightBlue),
+                              )),
+                          Text(
+                            'Rating $rating3',
+                            style: GoogleFonts.raleway(
+                                fontSize: 15, color: MyThemeData.lightBlue),
+                          ),
+                          RatingBar.builder(
+                            initialRating: rating3,
+                            minRating: 1,
+                            itemBuilder: (context, _) => Icon(
+                              Icons.star,
+                              color: Colors.amber,
+                            ),
+                            updateOnDrag: true,
+                            itemSize: 20,
+                            onRatingUpdate: (rating) => setState(() {
+                              this.rating3 = rating;
+                            }),
+                          ),
+                          GestureDetector(
+                            onTap: onClickComments,
+                            child: Text(
+                              comments,
+                              style: GoogleFonts.raleway(
+                                  fontSize: 15, color: MyThemeData.lightBlue),
+                            ),
+                          ),
+                        ],
+                      ),
+                      Spacer(),
+                      GestureDetector(
+                        onTap: getPhoneNumber,
+                        child: Icon(Icons.call),
+                      )
+                    ],
+                  ),
+                ),
+                Padding(padding: EdgeInsets.only(top: 10)),
+                Container(
+                  padding: EdgeInsets.only(right: 30, left: 30),
+                  decoration: BoxDecoration(color: MyThemeData.white),
+                  child: Row(
+                    children: [
+                      Column(
+                        children: [
+                          CircleAvatar(
+                            radius: 40.0,
+                            backgroundImage:
+                                AssetImage('assets/images/carpenter.png'),
+                          ),
+                          Text(
+                            'Carpenter',
+                            style: GoogleFonts.raleway(
+                                color: MyThemeData.lightBlue),
+                          ),
+                        ],
+                      ),
+                      Spacer(),
+                      Column(
+                        children: [
+                          Text(
+                            name,
+                            style: GoogleFonts.raleway(
+                                fontSize: 15, color: MyThemeData.lightBlue),
+                          ),
+                          GestureDetector(
+                            onTap: onClickMessage,
+                            child: Text(
+                              message,
+                              style: GoogleFonts.raleway(
+                                  fontSize: 15, color: MyThemeData.lightBlue),
+                            ),
+                          ),
+                          const SizedBox(
+                            height: 1,
+                          ),
+                          GestureDetector(
+                              onTap: () => showRating(),
+                              child: Text(
+                                'Rate My Services',
+                                style: GoogleFonts.raleway(
+                                    fontSize: 15, color: MyThemeData.lightBlue),
+                              )),
+                          Text(
+                            'Rating $rating3',
+                            style: GoogleFonts.raleway(
+                                fontSize: 15, color: MyThemeData.lightBlue),
+                          ),
+                          RatingBar.builder(
+                            initialRating: rating3,
+                            minRating: 1,
+                            itemBuilder: (context, _) => Icon(
+                              Icons.star,
+                              color: Colors.amber,
+                            ),
+                            updateOnDrag: true,
+                            itemSize: 20,
+                            onRatingUpdate: (rating) => setState(() {
+                              this.rating3 = rating;
+                            }),
+                          ),
+                          GestureDetector(
+                            onTap: onClickComments,
+                            child: Text(
+                              comments,
+                              style: GoogleFonts.raleway(
+                                  fontSize: 15, color: MyThemeData.lightBlue),
+                            ),
+                          ),
+                        ],
+                      ),
+                      Spacer(),
+                      GestureDetector(
+                        onTap: getPhoneNumber,
+                        child: Icon(Icons.call),
+                      )
+                    ],
+                  ),
+                ),
+                Padding(padding: EdgeInsets.only(top: 10)),
+                Container(
+                  padding: EdgeInsets.only(right: 30, left: 30),
+                  decoration: BoxDecoration(color: MyThemeData.white),
+                  child: Row(
+                    children: [
+                      Column(
+                        children: [
+                          CircleAvatar(
+                            radius: 40.0,
+                            backgroundImage:
+                                AssetImage('assets/images/carpenter.png'),
+                          ),
+                          Text(
+                            'Carpenter',
+                            style: GoogleFonts.raleway(
+                                color: MyThemeData.lightBlue),
+                          ),
+                        ],
+                      ),
+                      Spacer(),
+                      Column(
+                        children: [
+                          Text(
+                            name,
+                            style: GoogleFonts.raleway(
+                                fontSize: 15, color: MyThemeData.lightBlue),
+                          ),
+                          GestureDetector(
+                            onTap: onClickMessage,
+                            child: Text(
+                              message,
+                              style: GoogleFonts.raleway(
+                                  fontSize: 15, color: MyThemeData.lightBlue),
+                            ),
+                          ),
+                          const SizedBox(
+                            height: 1,
+                          ),
+                          GestureDetector(
+                              onTap: () => showRating(),
+                              child: Text(
+                                'Rate My Services',
+                                style: GoogleFonts.raleway(
+                                    fontSize: 15, color: MyThemeData.lightBlue),
+                              )),
+                          Text(
+                            'Rating $rating3',
+                            style: GoogleFonts.raleway(
+                                fontSize: 15, color: MyThemeData.lightBlue),
+                          ),
+                          RatingBar.builder(
+                            initialRating: rating3,
+                            minRating: 1,
+                            itemBuilder: (context, _) => Icon(
+                              Icons.star,
+                              color: Colors.amber,
+                            ),
+                            updateOnDrag: true,
+                            itemSize: 20,
+                            onRatingUpdate: (rating) => setState(() {
+                              this.rating3 = rating;
+                            }),
+                          ),
+                          GestureDetector(
+                            onTap: onClickComments,
+                            child: Text(
+                              comments,
+                              style: GoogleFonts.raleway(
+                                  fontSize: 15, color: MyThemeData.lightBlue),
+                            ),
+                          ),
+                        ],
+                      ),
+                      Spacer(),
+                      GestureDetector(
+                        onTap: getPhoneNumber,
+                        child: Icon(Icons.call),
+                      )
+                    ],
+                  ),
+                ),
+                Padding(padding: EdgeInsets.only(top: 10)),
+                Container(
+                  padding: EdgeInsets.only(right: 30, left: 30),
+                  decoration: BoxDecoration(color: MyThemeData.white),
+                  child: Row(
+                    children: [
+                      Column(
+                        children: [
+                          CircleAvatar(
+                            radius: 40.0,
+                            backgroundImage:
+                                AssetImage('assets/images/carpenter.png'),
+                          ),
+                          Text(
+                            'Carpenter',
+                            style: GoogleFonts.raleway(
+                                color: MyThemeData.lightBlue),
+                          ),
+                        ],
+                      ),
+                      Spacer(),
+                      Column(
+                        children: [
+                          Text(
+                            name,
+                            style: GoogleFonts.raleway(
+                                fontSize: 15, color: MyThemeData.lightBlue),
+                          ),
+                          GestureDetector(
+                            onTap: onClickMessage,
+                            child: Text(
+                              message,
+                              style: GoogleFonts.raleway(
+                                  fontSize: 15, color: MyThemeData.lightBlue),
+                            ),
+                          ),
+                          const SizedBox(
+                            height: 1,
+                          ),
+                          GestureDetector(
+                              onTap: () => showRating(),
+                              child: Text(
+                                'Rate My Services',
+                                style: GoogleFonts.raleway(
+                                    fontSize: 15, color: MyThemeData.lightBlue),
+                              )),
+                          Text(
+                            'Rating $rating3',
+                            style: GoogleFonts.raleway(
+                                fontSize: 15, color: MyThemeData.lightBlue),
+                          ),
+                          RatingBar.builder(
+                            initialRating: rating3,
+                            minRating: 1,
+                            itemBuilder: (context, _) => Icon(
+                              Icons.star,
+                              color: Colors.amber,
+                            ),
+                            updateOnDrag: true,
+                            itemSize: 20,
+                            onRatingUpdate: (rating) => setState(() {
+                              this.rating3 = rating;
+                            }),
+                          ),
+                          GestureDetector(
+                            onTap: onClickComments,
+                            child: Text(
+                              comments,
+                              style: GoogleFonts.raleway(
+                                  fontSize: 15, color: MyThemeData.lightBlue),
+                            ),
+                          ),
+                        ],
+                      ),
+                      Spacer(),
+                      GestureDetector(
+                        onTap: getPhoneNumber,
+                        child: Icon(Icons.call),
+                      )
+                    ],
+                  ),
+                ),
+                Padding(padding: EdgeInsets.only(top: 10)),
+                Container(
+                  padding: EdgeInsets.only(right: 30, left: 30),
+                  decoration: BoxDecoration(color: MyThemeData.white),
+                  child: Row(
+                    children: [
+                      Column(
+                        children: [
+                          CircleAvatar(
+                            radius: 40.0,
+                            backgroundImage:
+                                AssetImage('assets/images/carpenter.png'),
+                          ),
+                          Text(
+                            'Carpenter',
+                            style: GoogleFonts.raleway(
+                                color: MyThemeData.lightBlue),
+                          ),
+                        ],
+                      ),
+                      Spacer(),
+                      Column(
+                        children: [
+                          Text(
+                            name,
+                            style: GoogleFonts.raleway(
+                                fontSize: 15, color: MyThemeData.lightBlue),
+                          ),
+                          GestureDetector(
+                            onTap: onClickMessage,
+                            child: Text(
+                              message,
+                              style: GoogleFonts.raleway(
+                                  fontSize: 15, color: MyThemeData.lightBlue),
+                            ),
+                          ),
+                          const SizedBox(
+                            height: 1,
+                          ),
+                          GestureDetector(
+                              onTap: () => showRating(),
+                              child: Text(
+                                'Rate My Services',
+                                style: GoogleFonts.raleway(
+                                    fontSize: 15, color: MyThemeData.lightBlue),
+                              )),
+                          Text(
+                            'Rating $rating3',
+                            style: GoogleFonts.raleway(
+                                fontSize: 15, color: MyThemeData.lightBlue),
+                          ),
+                          RatingBar.builder(
+                            initialRating: rating3,
+                            minRating: 1,
+                            itemBuilder: (context, _) => Icon(
+                              Icons.star,
+                              color: Colors.amber,
+                            ),
+                            updateOnDrag: true,
+                            itemSize: 20,
+                            onRatingUpdate: (rating) => setState(() {
+                              this.rating3 = rating;
+                            }),
+                          ),
+                          GestureDetector(
+                            onTap: onClickComments,
+                            child: Text(
+                              comments,
+                              style: GoogleFonts.raleway(
+                                  fontSize: 15, color: MyThemeData.lightBlue),
+                            ),
+                          ),
+                        ],
+                      ),
+                      Spacer(),
+                      GestureDetector(
+                        onTap: getPhoneNumber,
+                        child: Icon(Icons.call),
+                      )
+                    ],
+                  ),
+                ),
+                Padding(padding: EdgeInsets.only(top: 10)),
               ],
             ),
           ),
-                Padding(padding: EdgeInsets.only(top: 10)),
-                Container(
-                  padding: EdgeInsets.only(right: 30, left: 30),
-                  decoration: BoxDecoration(color: MyThemeData.white),
-                  child: Row(
-                    children: [
-                      Column(children: [
-                        CircleAvatar(radius: 40.0,backgroundImage:AssetImage ('assets/images/carpenter.png'),)
-                        ,Text('Carpenter'),
-                      ],),                      Spacer(),
-                      Column(
-                        children: [
-                          Text(name,
-                            style: GoogleFonts.raleway(fontSize: 15),
-                          ),
-                          GestureDetector(
-                            onTap: getPhoneNumber,
-                            child: Text(phoneNumber,
-                              style: GoogleFonts.raleway(fontSize: 15),
-                            ),
-                          ),
-                          GestureDetector(
-                            onTap: onClickMessage,
-                            child: Text(message,
-                              style: GoogleFonts.raleway(fontSize: 15),
-                            ),
-                          ),
-                          GestureDetector(
-                            onTap: onClickRate,
-                            child: Text(rate,
-                              style: GoogleFonts.raleway(fontSize: 15),
-                            ),
-                          ),
-                          GestureDetector(
-                            onTap: onClickComments,
-                            child: Text(comments,
-                              style: GoogleFonts.raleway(fontSize: 15),
-                            ),
-                          ),
-                        ],
-                      ),
-                      Spacer(),
-                      GestureDetector(
-                        onTap: onClickComments,
-                        child: Icon(Icons.add),
-                      )
-                    ],
-                  ),
-                ),
-                Padding(padding: EdgeInsets.only(top: 10)),
-                Container(
-                  padding: EdgeInsets.only(right: 30, left: 30),
-                  decoration: BoxDecoration(color: MyThemeData.white),
-                  child: Row(
-                    children: [
-                      Column(children: [
-                        CircleAvatar(radius: 40.0,backgroundImage:AssetImage ('assets/images/carpenter.png'),)
-                        ,Text('Carpenter'),
-                      ],),                      Spacer(),
-                      Column(
-                        children: [
-                          Text(name,
-                            style: GoogleFonts.raleway(fontSize: 15),
-                          ),
-                          GestureDetector(
-                            onTap: getPhoneNumber,
-                            child: Text(phoneNumber,
-                              style: GoogleFonts.raleway(fontSize: 15),
-                            ),
-                          ),
-                          GestureDetector(
-                            onTap: onClickMessage,
-                            child: Text(message,
-                              style: GoogleFonts.raleway(fontSize: 15),
-                            ),
-                          ),
-                          GestureDetector(
-                            onTap: onClickRate,
-                            child: Text(rate,
-                              style: GoogleFonts.raleway(fontSize: 15),
-                            ),
-                          ),
-                          GestureDetector(
-                            onTap: onClickComments,
-                            child: Text(comments,
-                              style: GoogleFonts.raleway(fontSize: 15),
-                            ),
-                          ),
-                        ],
-                      ),
-                      Spacer(),
-                      GestureDetector(
-                        onTap: onClickComments,
-                        child: Icon(Icons.add),
-                      )
-                    ],
-                  ),
-                ),
-                Padding(padding: EdgeInsets.only(top: 10)),
-                Container(
-                  padding: EdgeInsets.only(right: 30, left: 30),
-                  decoration: BoxDecoration(color: MyThemeData.white),
-                  child: Row(
-                    children: [
-                      Column(children: [
-                        CircleAvatar(radius: 40.0,backgroundImage:AssetImage ('assets/images/carpenter.png'),)
-                        ,Text('Carpenter'),
-                      ],),                      Spacer(),
-                      Column(
-                        children: [
-                          Text(name,
-                            style: GoogleFonts.raleway(fontSize: 15),
-                          ),
-                          GestureDetector(
-                            onTap: getPhoneNumber,
-                            child: Text(phoneNumber,
-                              style: GoogleFonts.raleway(fontSize: 15),
-                            ),
-                          ),
-                          GestureDetector(
-                            onTap: onClickMessage,
-                            child: Text(message,
-                              style: GoogleFonts.raleway(fontSize: 15),
-                            ),
-                          ),
-                          GestureDetector(
-                            onTap: onClickRate,
-                            child: Text(rate,
-                              style: GoogleFonts.raleway(fontSize: 15),
-                            ),
-                          ),
-                          GestureDetector(
-                            onTap: onClickComments,
-                            child: Text(comments,
-                              style: GoogleFonts.raleway(fontSize: 15),
-                            ),
-                          ),
-                        ],
-                      ),
-                      Spacer(),
-                      GestureDetector(
-                        onTap: onClickComments,
-                        child: Icon(Icons.add),
-                      )
-                    ],
-                  ),
-                ),
-                Padding(padding: EdgeInsets.only(top: 10)),
-                Container(
-                  padding: EdgeInsets.only(right: 30, left: 30),
-                  decoration: BoxDecoration(color: MyThemeData.white),
-                  child: Row(
-                    children: [
-                      Column(children: [
-                        CircleAvatar(radius: 40.0,backgroundImage:AssetImage ('assets/images/carpenter.png'),)
-                        ,Text('Carpenter'),
-                      ],),                      Spacer(),
-                      Column(
-                        children: [
-                          Text(name,
-                            style: GoogleFonts.raleway(fontSize: 15),
-                          ),
-                          GestureDetector(
-                            onTap: getPhoneNumber,
-                            child: Text(phoneNumber,
-                              style: GoogleFonts.raleway(fontSize: 15),
-                            ),
-                          ),
-                          GestureDetector(
-                            onTap: onClickMessage,
-                            child: Text(message,
-                              style: GoogleFonts.raleway(fontSize: 15),
-                            ),
-                          ),
-                          GestureDetector(
-                            onTap: onClickRate,
-                            child: Text(rate,
-                              style: GoogleFonts.raleway(fontSize: 15),
-                            ),
-                          ),
-                          GestureDetector(
-                            onTap: onClickComments,
-                            child: Text(comments,
-                              style: GoogleFonts.raleway(fontSize: 15),
-                            ),
-                          ),
-                        ],
-                      ),
-                      Spacer(),
-                      GestureDetector(
-                        onTap: onClickComments,
-                        child: Icon(Icons.add),
-                      )
-                    ],
-                  ),
-                ),
-                Padding(padding: EdgeInsets.only(top: 10)),
-                Container(
-                  padding: EdgeInsets.only(right: 30, left: 30),
-                  decoration: BoxDecoration(color: MyThemeData.white),
-                  child: Row(
-                    children: [
-                      Column(children: [
-                        CircleAvatar(radius: 40.0,backgroundImage:AssetImage ('assets/images/carpenter.png'),)
-                        ,Text('Carpenter'),
-                      ],),                      Spacer(),
-                      Column(
-                        children: [
-                          Text(name,
-                            style: GoogleFonts.raleway(fontSize: 15),
-                          ),
-                          GestureDetector(
-                            onTap: getPhoneNumber,
-                            child: Text(phoneNumber,
-                              style: GoogleFonts.raleway(fontSize: 15),
-                            ),
-                          ),
-                          GestureDetector(
-                            onTap: onClickMessage,
-                            child: Text(message,
-                              style: GoogleFonts.raleway(fontSize: 15),
-                            ),
-                          ),
-                          GestureDetector(
-                            onTap: onClickRate,
-                            child: Text(rate,
-                              style: GoogleFonts.raleway(fontSize: 15),
-                            ),
-                          ),
-                          GestureDetector(
-                            onTap: onClickComments,
-                            child: Text(comments,
-                              style: GoogleFonts.raleway(fontSize: 15),
-                            ),
-                          ),
-                        ],
-                      ),
-                      Spacer(),
-                      GestureDetector(
-                        onTap: onClickComments,
-                        child: Icon(Icons.add),
-                      )
-                    ],
-                  ),
-                ),
-                Padding(padding: EdgeInsets.only(top: 10)),
-                Container(
-                  padding: EdgeInsets.only(right: 30, left: 30),
-                  decoration: BoxDecoration(color: MyThemeData.white),
-                  child: Row(
-                    children: [
-                      Column(children: [
-                        CircleAvatar(radius: 40.0,backgroundImage:AssetImage ('assets/images/carpenter.png'),)
-                        ,Text('Carpenter'),
-                      ],),                      Spacer(),
-                      Column(
-                        children: [
-                          Text(name,
-                            style: GoogleFonts.raleway(fontSize: 15),
-                          ),
-                          GestureDetector(
-                            onTap: getPhoneNumber,
-                            child: Text(phoneNumber,
-                              style: GoogleFonts.raleway(fontSize: 15),
-                            ),
-                          ),
-                          GestureDetector(
-                            onTap: onClickMessage,
-                            child: Text(message,
-                              style: GoogleFonts.raleway(fontSize: 15),
-                            ),
-                          ),
-                          GestureDetector(
-                            onTap: onClickRate,
-                            child: Text(rate,
-                              style: GoogleFonts.raleway(fontSize: 15),
-                            ),
-                          ),
-                          GestureDetector(
-                            onTap: onClickComments,
-                            child: Text(comments,
-                              style: GoogleFonts.raleway(fontSize: 15),
-                            ),
-                          ),
-                        ],
-                      ),
-                      Spacer(),
-                      GestureDetector(
-                        onTap: onClickComments,
-                        child: Icon(Icons.add),
-                      )
-                    ],
-                  ),
-                ),
-                Padding(padding: EdgeInsets.only(top: 10)),
-                Container(
-                  padding: EdgeInsets.only(right: 30, left: 30),
-                  decoration: BoxDecoration(color: MyThemeData.white),
-                  child: Row(
-                    children: [
-                      Column(children: [
-                        CircleAvatar(radius: 40.0,backgroundImage:AssetImage ('assets/images/carpenter.png'),)
-                        ,Text('Carpenter'),
-                      ],),                      Spacer(),
-                      Column(
-                        children: [
-                          Text(name,
-                            style: GoogleFonts.raleway(fontSize: 15),
-                          ),
-                          GestureDetector(
-                            onTap: getPhoneNumber,
-                            child: Text(phoneNumber,
-                              style: GoogleFonts.raleway(fontSize: 15),
-                            ),
-                          ),
-                          GestureDetector(
-                            onTap: onClickMessage,
-                            child: Text(message,
-                              style: GoogleFonts.raleway(fontSize: 15),
-                            ),
-                          ),
-                          GestureDetector(
-                            onTap: onClickRate,
-                            child: Text(rate,
-                              style: GoogleFonts.raleway(fontSize: 15),
-                            ),
-                          ),
-                          GestureDetector(
-                            onTap: onClickComments,
-                            child: Text(comments,
-                              style: GoogleFonts.raleway(fontSize: 15),
-                            ),
-                          ),
-                        ],
-                      ),
-                      Spacer(),
-                      GestureDetector(
-                        onTap: onClickComments,
-                        child: Icon(Icons.add),
-                      )
-                    ],
-                  ),
-                ),
-                Padding(padding: EdgeInsets.only(top: 10)),
-                Container(
-                  padding: EdgeInsets.only(right: 30, left: 30),
-                  decoration: BoxDecoration(color: MyThemeData.white),
-                  child: Row(
-                    children: [
-                      Column(children: [
-                        CircleAvatar(radius: 40.0,backgroundImage:AssetImage ('assets/images/carpenter.png'),)
-                        ,Text('Carpenter'),
-                      ],),                      Spacer(),
-                      Column(
-                        children: [
-                          Text(name,
-                            style: GoogleFonts.raleway(fontSize: 15),
-                          ),
-                          GestureDetector(
-                            onTap: getPhoneNumber,
-                            child: Text(phoneNumber,
-                              style: GoogleFonts.raleway(fontSize: 15),
-                            ),
-                          ),
-                          GestureDetector(
-                            onTap: onClickMessage,
-                            child: Text(message,
-                              style: GoogleFonts.raleway(fontSize: 15),
-                            ),
-                          ),
-                          GestureDetector(
-                            onTap: onClickRate,
-                            child: Text(rate,
-                              style: GoogleFonts.raleway(fontSize: 15),
-                            ),
-                          ),
-                          GestureDetector(
-                            onTap: onClickComments,
-                            child: Text(comments,
-                              style: GoogleFonts.raleway(fontSize: 15),
-                            ),
-                          ),
-                        ],
-                      ),
-                      Spacer(),
-                      GestureDetector(
-                        onTap: onClickComments,
-                        child: Icon(Icons.add),
-                      )
-                    ],
-                  ),
-                ),
-                Padding(padding: EdgeInsets.only(top: 10)),
-                Container(
-                  padding: EdgeInsets.only(right: 30, left: 30),
-                  decoration: BoxDecoration(color: MyThemeData.white),
-                  child: Row(
-                    children: [
-                      Column(children: [
-                        CircleAvatar(radius: 40.0,backgroundImage:AssetImage ('assets/images/carpenter.png'),)
-                        ,Text('Carpenter'),
-                      ],),                      Spacer(),
-                      Column(
-                        children: [
-                          Text(name,
-                            style: GoogleFonts.raleway(fontSize: 15),
-                          ),
-                          GestureDetector(
-                            onTap: getPhoneNumber,
-                            child: Text(phoneNumber,
-                              style: GoogleFonts.raleway(fontSize: 15),
-                            ),
-                          ),
-                          GestureDetector(
-                            onTap: onClickMessage,
-                            child: Text(message,
-                              style: GoogleFonts.raleway(fontSize: 15),
-                            ),
-                          ),
-                          GestureDetector(
-                            onTap: onClickRate,
-                            child: Text(rate,
-                              style: GoogleFonts.raleway(fontSize: 15),
-                            ),
-                          ),
-                          GestureDetector(
-                            onTap: onClickComments,
-                            child: Text(comments,
-                              style: GoogleFonts.raleway(fontSize: 15),
-                            ),
-                          ),
-                        ],
-                      ),
-                      Spacer(),
-                      GestureDetector(
-                        onTap: onClickComments,
-                        child: Icon(Icons.add),
-                      )
-                    ],
-                  ),
-                ),
-                Padding(padding: EdgeInsets.only(top: 10)),
-              ],
-            ),
-          ),
-        )
-    );
+        ));
   }
 
-
+  Widget buildRating() => RatingBar.builder(
+        initialRating: rating,
+        minRating: 1,
+        itemBuilder: (context, _) => Icon(
+          Icons.star,
+          color: Colors.amber,
+        ),
+        updateOnDrag: true,
+        itemSize: 20,
+        onRatingUpdate: (rating) => setState(() {
+          this.rating = rating;
+        }),
+      );
+  Widget buildRating2() => RatingBar.builder(
+        initialRating: rating2,
+        minRating: 1,
+        itemBuilder: (context, _) => Icon(
+          Icons.star,
+          color: Colors.amber,
+        ),
+        updateOnDrag: true,
+        itemSize: 20,
+        onRatingUpdate: (rating) => setState(() {
+          this.rating2 = rating;
+        }),
+      );
   final dp = FirebaseFirestore.instance;
 
-  Future <void> getPhoneNumber() async {
+  Future<void> getPhoneNumber() async {
     final user = FirebaseAuth.instance.currentUser!.uid.toString();
     FirebaseFirestore.instance
         .collection('users')
@@ -554,20 +889,82 @@ class _CategoryScreenState extends State<CategoryScreen> {
         .get()
         .then((DocumentSnapshot documentSnapshot) async {
       if (documentSnapshot.exists) {
-        await FlutterPhoneDirectCaller.callNumber(documentSnapshot["phoneNumber"]);
+        await FlutterPhoneDirectCaller.callNumber(
+            documentSnapshot["phoneNumber"]);
         print('Document data: ${documentSnapshot["phoneNumber"]}');
       } else {
         print('Document does not exist on the database');
       }
     });
   }
-   onClickMessage()async{
+
+  onClickMessage() async {
     Navigator.pushNamed(context, ChatScreen.routeName);
   }
-  onClickComments()async{
+
+  onClickComments() async {
     Navigator.pushNamed(context, CommentsScreen.routeName);
   }
-  onClickRate()async{
-    Navigator.pushNamed(context, RateScreen.routeName);
-  }
+
+  void showRating() => showDialog(
+      context: context,
+      builder: (context) => AlertDialog(
+            title: Text(
+              'Say your Opinion',
+              style: GoogleFonts.raleway(
+                  fontSize: 15, color: MyThemeData.lightBlue),
+            ),
+            content: Column(
+              crossAxisAlignment: CrossAxisAlignment.center,
+              mainAxisSize: MainAxisSize.min,
+              children: [
+                Text(
+                  'Please, Leave a Star Rating',
+                  style: GoogleFonts.raleway(
+                      fontSize: 15, color: MyThemeData.lightBlue),
+                ),
+                buildRating(),
+              ],
+            ),
+            actions: [
+              TextButton(
+                  onPressed: () => Navigator.pop(context),
+                  child: Text(
+                    'Submit',
+                    style: GoogleFonts.raleway(
+                        fontSize: 15, color: MyThemeData.lightBlue),
+                  ))
+            ],
+          ));
+
+  void showRating2() => showDialog(
+      context: context,
+      builder: (context) => AlertDialog(
+            title: Text(
+              'Say your Opinion',
+              style: GoogleFonts.raleway(
+                  fontSize: 15, color: MyThemeData.lightBlue),
+            ),
+            content: Column(
+              crossAxisAlignment: CrossAxisAlignment.center,
+              mainAxisSize: MainAxisSize.min,
+              children: [
+                Text(
+                  'Please, Leave a Star Rating',
+                  style: GoogleFonts.raleway(
+                      fontSize: 15, color: MyThemeData.lightBlue),
+                ),
+                buildRating2(),
+              ],
+            ),
+            actions: [
+              TextButton(
+                  onPressed: () => Navigator.pop(context),
+                  child: Text(
+                    'Submit',
+                    style: GoogleFonts.raleway(
+                        fontSize: 15, color: MyThemeData.lightBlue),
+                  ))
+            ],
+          ));
 }
