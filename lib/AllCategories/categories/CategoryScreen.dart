@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_phone_direct_caller/flutter_phone_direct_caller.dart';
 import 'package:flutter_rating_bar/flutter_rating_bar.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:home_maintenance/AllCategories/CategoryDetails.dart';
 import 'package:home_maintenance/chat/ChatScreen.dart';
 import 'package:home_maintenance/comments/CommentsScreen.dart';
 import 'package:home_maintenance/main.dart';
@@ -58,7 +59,7 @@ class _CategoryScreenState extends State<CategoryScreen> {
                           CircleAvatar(
                             radius: 40.0,
                             backgroundImage:
-                                AssetImage('assets/images/carpenter.png'),
+                            AssetImage('assets/images/carpenter.png'),
                           ),
                           Text(
                             'Carpenter',
@@ -74,9 +75,6 @@ class _CategoryScreenState extends State<CategoryScreen> {
                             name,
                             style: GoogleFonts.raleway(
                                 fontSize: 15, color: MyThemeData.lightBlue),
-                          ),
-                          const SizedBox(
-                            height: 1,
                           ),
                           GestureDetector(
                             onTap: onClickMessage,
@@ -852,7 +850,6 @@ class _CategoryScreenState extends State<CategoryScreen> {
           ),
         ));
   }
-
   Widget buildRating() => RatingBar.builder(
         initialRating: rating,
         minRating: 1,
@@ -906,7 +903,7 @@ class _CategoryScreenState extends State<CategoryScreen> {
     Navigator.pushNamed(context, CommentsScreen.routeName);
   }
 
-  void showRating() => showDialog(
+   showRating() => showDialog(
       context: context,
       builder: (context) => AlertDialog(
             title: Text(

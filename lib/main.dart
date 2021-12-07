@@ -7,7 +7,6 @@ import 'package:home_maintenance/chat/ChatScreen.dart';
 import 'package:home_maintenance/comments/CommentsScreen.dart';
 import 'package:home_maintenance/home/HomeScreen.dart';
 import 'package:home_maintenance/home/location/MapScreen.dart';
-import 'package:home_maintenance/lastservices/LastServicesScreen.dart';
 import 'package:provider/provider.dart';
 import 'auth/login/LoginScreen.dart';
 import 'auth/signup/SignupScreen.dart';
@@ -50,7 +49,6 @@ class MyApp extends StatelessWidget {
             CategoryScreen.routeName: (context) => CategoryScreen(),
             ChatScreen.routeName: (context) => ChatScreen(),
             CommentsScreen.routeName:(context) => CommentsScreen(),
-            LastServicesScreen.routeName:(context)=> LastServicesScreen(),
           },
           initialRoute:auth.currentUser!=null?HomeScreen.routeName: LoginScreen.routeName,
         );

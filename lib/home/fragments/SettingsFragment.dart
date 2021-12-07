@@ -3,8 +3,8 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:home_maintenance/AllCategories/categories/CategoryScreen.dart';
 import 'package:home_maintenance/auth/login/LoginScreen.dart';
-import 'package:home_maintenance/lastservices/LastServicesScreen.dart';
 import 'package:home_maintenance/main.dart';
 import 'package:image_picker/image_picker.dart';
 
@@ -180,7 +180,7 @@ class SettingsFragmentState extends State<SettingsFragment> {
   }
 
   onClickLastServices() async {
-    Navigator.pushNamed(context, LastServicesScreen.routeName);
+    Navigator.pushNamed(context, CategoryScreen.routeName);
   }
 
   Widget imageProfile() {

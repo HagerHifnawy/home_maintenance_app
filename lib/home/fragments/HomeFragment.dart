@@ -115,9 +115,10 @@ class _HomeFragmentState extends State<HomeFragment> {
       ),
     );
   }
+  bool isLoading = false;
 
-  void onClickMap() {
-    Navigator.pushNamed(context, MapScreen.routeName);
+  void onClickMap() async{
+       Navigator.pushNamed(context, MapScreen.routeName);
   }
 
   void onClickCategory() {

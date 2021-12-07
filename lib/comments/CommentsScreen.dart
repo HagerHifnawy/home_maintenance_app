@@ -27,6 +27,43 @@ class CommentsScreenState extends State<CommentsScreen> {
         ),
         backgroundColor: MyThemeData.lightBlue,
       ),
+      body: Padding(
+        padding: EdgeInsets.all(20.0),
+        child: Column(
+          children: [
+            Container(
+              decoration: BoxDecoration(
+                  border: Border.all(
+                    color: MyThemeData.backgroundColor,
+                    width: 1.0,
+                  )),
+              clipBehavior: Clip.antiAliasWithSaveLayer,
+              child: Row(
+                children: [
+                  Expanded(
+                      child: TextFormField(
+                        decoration: InputDecoration(
+                            border: InputBorder.none,
+                            hintText: 'Tybe Your Comments...'),
+                      )),
+                  Container(
+                    height: 40.0,
+                    child: MaterialButton(
+                        minWidth: 1.0,
+                        color: MyThemeData.lightBlue,
+                        onPressed: () {},
+                        child: Icon(
+                          Icons.send,
+                          size: 16.0,
+                          color: MyThemeData.backgroundColor,
+                        )),
+                  ),
+                ],
+              ),
+            ),
+          ],
+        ),
+      )
     );
   }
 }

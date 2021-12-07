@@ -3,7 +3,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:home_maintenance/lastservices/LastServicesScreen.dart';
+import 'package:home_maintenance/AllCategories/categories/CategoryScreen.dart';
 import 'package:home_maintenance/main.dart';
 
 class ProfileFragment extends StatefulWidget {
@@ -110,7 +110,7 @@ class _ProfileFragmentState extends State<ProfileFragment> {
   }
 
   onClickLastServices()async{
-    Navigator.pushNamed(context, LastServicesScreen.routeName);
+    Navigator.pushNamed(context, CategoryScreen.routeName);
   }
   final dp = FirebaseFirestore.instance;
   getCurrentUserData() async {
