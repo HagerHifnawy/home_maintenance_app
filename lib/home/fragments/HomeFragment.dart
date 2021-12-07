@@ -27,7 +27,7 @@ class _HomeFragmentState extends State<HomeFragment> {
         )),
         backgroundColor: MyThemeData.lightBlue,
       ),
-      body: Container(
+      body:  Container(
         padding: EdgeInsets.only(top: 30),
         child: Column(
           children: [

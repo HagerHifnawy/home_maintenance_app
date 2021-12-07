@@ -4,7 +4,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_phone_direct_caller/flutter_phone_direct_caller.dart';
 import 'package:flutter_rating_bar/flutter_rating_bar.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:home_maintenance/AllCategories/CategoryDetails.dart';
 import 'package:home_maintenance/chat/ChatScreen.dart';
 import 'package:home_maintenance/comments/CommentsScreen.dart';
 import 'package:home_maintenance/main.dart';
