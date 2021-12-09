@@ -17,6 +17,15 @@ class ChatScreen extends StatefulWidget {
 class ChatScreenState extends State<ChatScreen> {
   final messageTextController = TextEditingController();
   String? messageText;
+  String name = '',
+      name1 = '',
+      name2= '';
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+    getWorkerData();
+  }
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -31,7 +40,8 @@ class ChatScreenState extends State<ChatScreen> {
               SizedBox(
                 width: 20.0,
               ),
-              Text('Carpenter')
+             Text(name1)
+            
             ],
           ),
         ),
@@ -83,7 +93,33 @@ class ChatScreenState extends State<ChatScreen> {
           ),
         ));
   }
+  getWorkerData() async {
+    FirebaseFirestore.instance
+        .collection('workers')
+        .doc('LmsUAVZFwVtW7NuD1fch')
+        .get()
+        .then((DocumentSnapshot documentSnapshot) async {
+      print('Document data: ${documentSnapshot.data()}');
+      name = documentSnapshot['name'];
+    });
+    FirebaseFirestore.instance
+        .collection('workers')
+        .doc('JhgzxmodhGc3asRNZnVO')
+        .get()
+        .then((DocumentSnapshot documentSnapshot) async {
+      print('Document data: ${documentSnapshot.data()}');
+      name1 = documentSnapshot['name'];
 
+    });
+    FirebaseFirestore.instance
+        .collection('workers')
+        .doc('WtjVrBmgtkDNH0J6OGsj')
+        .get()
+        .then((DocumentSnapshot documentSnapshot) async {
+      print('Document data: ${documentSnapshot.data()}');
+      name2 = documentSnapshot['name'];
+    });
+  }
 }
 
 class MessageStreamBuilder extends StatelessWidget {
@@ -170,4 +206,5 @@ class MessageLine extends StatelessWidget {
           ],
         ));
   }
+
 }

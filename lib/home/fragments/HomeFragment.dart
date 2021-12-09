@@ -83,25 +83,25 @@ class _HomeFragmentState extends State<HomeFragment> {
                     GestureDetector(
                       onTap: onClickCategory,
                       child: CategoryItem(
-                          imagePath: 'assets/images/carpenter.png',
+                          imagePath: 'assets/images/plumbing.png',
                           backGroundColor: MyThemeData.blue,
-                          text: 'Carpenter',
+                          text: 'plumbing',
                           rightSided: false),
                     ),
                     CategoryItem(
-                        imagePath: 'assets/images/carpenter.png',
+                        imagePath: 'assets/images/wallpainting.png',
                         backGroundColor: MyThemeData.pink,
-                        text: 'Carpenter',
+                        text: 'Painting',
                         rightSided: true),
                     CategoryItem(
-                        imagePath: 'assets/images/carpenter.png',
+                        imagePath: 'assets/images/electronic.png',
                         backGroundColor: MyThemeData.blue,
-                        text: 'Carpenter',
+                        text: 'Electrical',
                         rightSided: false),
                     CategoryItem(
-                        imagePath: 'assets/images/carpenter.png',
+                        imagePath: 'assets/images/ceramic.png',
                         backGroundColor: MyThemeData.pink,
-                        text: 'Carpenter',
+                        text: 'Ceramic',
                         rightSided: true),
                     CategoryItem(
                         imagePath: 'assets/images/carpenter.png',

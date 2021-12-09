@@ -19,11 +19,17 @@ class _CategoryScreenState extends State<CategoryScreen> {
   double rating = 0;
   double rating2 = 0;
   double rating3 = 0;
-  String name = 'Name';
   String message = 'Message';
   String comments = 'Comments';
   String rate = 'Rate';
-  String phoneNumber = 'Phone Number';
+  String name ='', work = '', name1 = '', work1 = '', name2 = '', work2 = '';
+
+  @override
+   void initState() {
+    super.initState();
+    getWorkerData();
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -47,7 +53,7 @@ class _CategoryScreenState extends State<CategoryScreen> {
           child: SingleChildScrollView(
             scrollDirection: Axis.vertical,
             child: Column(
-              children: [
+              children: <Widget>[
                 Container(
                   padding: EdgeInsets.only(right: 30, left: 30),
                   decoration: BoxDecoration(color: MyThemeData.white),
@@ -58,10 +64,10 @@ class _CategoryScreenState extends State<CategoryScreen> {
                           CircleAvatar(
                             radius: 40.0,
                             backgroundImage:
-                            AssetImage('assets/images/carpenter.png'),
+                                AssetImage('assets/images/carpenter.png'),
                           ),
                           Text(
-                            'Carpenter',
+                            work,
                             style: GoogleFonts.raleway(
                                 color: MyThemeData.lightBlue),
                           ),
@@ -131,7 +137,7 @@ class _CategoryScreenState extends State<CategoryScreen> {
                                 AssetImage('assets/images/carpenter.png'),
                           ),
                           Text(
-                            'Carpenter',
+                            work1,
                             style: GoogleFonts.raleway(
                                 color: MyThemeData.lightBlue),
                           ),
@@ -141,7 +147,7 @@ class _CategoryScreenState extends State<CategoryScreen> {
                       Column(
                         children: [
                           Text(
-                            name,
+                            name1,
                             style: GoogleFonts.raleway(
                                 fontSize: 15, color: MyThemeData.lightBlue),
                           ),
@@ -201,7 +207,7 @@ class _CategoryScreenState extends State<CategoryScreen> {
                                 AssetImage('assets/images/carpenter.png'),
                           ),
                           Text(
-                            'Carpenter',
+                            work2,
                             style: GoogleFonts.raleway(
                                 color: MyThemeData.lightBlue),
                           ),
@@ -211,7 +217,7 @@ class _CategoryScreenState extends State<CategoryScreen> {
                       Column(
                         children: [
                           Text(
-                            name,
+                            name2,
                             style: GoogleFonts.raleway(
                                 fontSize: 15, color: MyThemeData.lightBlue),
                           ),
@@ -293,7 +299,7 @@ class _CategoryScreenState extends State<CategoryScreen> {
                       Column(
                         children: [
                           Text(
-                            name,
+                            'Name',
                             style: GoogleFonts.raleway(
                                 fontSize: 15, color: MyThemeData.lightBlue),
                           ),
@@ -375,7 +381,7 @@ class _CategoryScreenState extends State<CategoryScreen> {
                       Column(
                         children: [
                           Text(
-                            name,
+                            'Name',
                             style: GoogleFonts.raleway(
                                 fontSize: 15, color: MyThemeData.lightBlue),
                           ),
@@ -849,6 +855,7 @@ class _CategoryScreenState extends State<CategoryScreen> {
           ),
         ));
   }
+
   Widget buildRating() => RatingBar.builder(
         initialRating: rating,
         minRating: 1,
@@ -902,7 +909,7 @@ class _CategoryScreenState extends State<CategoryScreen> {
     Navigator.pushNamed(context, CommentsScreen.routeName);
   }
 
-   showRating() => showDialog(
+  showRating() => showDialog(
       context: context,
       builder: (context) => AlertDialog(
             title: Text(
@@ -963,4 +970,34 @@ class _CategoryScreenState extends State<CategoryScreen> {
                   ))
             ],
           ));
+
+  getWorkerData() {
+    FirebaseFirestore.instance
+        .collection('workers')
+        .doc('LmsUAVZFwVtW7NuD1fch')
+        .get()
+        .then((DocumentSnapshot documentSnapshot) async {
+      print('Document data: ${documentSnapshot.data()}');
+      work = documentSnapshot['work'];
+      name = documentSnapshot['name'];
+    });
+    FirebaseFirestore.instance
+        .collection('workers')
+        .doc('JhgzxmodhGc3asRNZnVO')
+        .get()
+        .then((DocumentSnapshot documentSnapshot) async {
+      print('Document data: ${documentSnapshot.data()}');
+      work1 = documentSnapshot['work'];
+      name1 = documentSnapshot['name'];
+    });
+    FirebaseFirestore.instance
+        .collection('workers')
+        .doc('WtjVrBmgtkDNH0J6OGsj')
+        .get()
+        .then((DocumentSnapshot documentSnapshot) async {
+      print('Document data: ${documentSnapshot.data()}');
+     this. work2 = documentSnapshot['work'];
+      this.name2 = documentSnapshot['name'];
+    });
+  }
 }
