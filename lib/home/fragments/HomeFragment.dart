@@ -1,3 +1,4 @@
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:google_fonts/google_fonts.dart';
@@ -30,28 +31,29 @@ class _HomeFragmentState extends State<HomeFragment> {
       body:  Container(
         padding: EdgeInsets.only(top: 30),
         child: Column(
-          children: [
-            Stack(children: [
-              Center(
-                child: TextButton(
-                    onPressed: onClickMap,
-                    child: Image.asset('assets/images/map.png')),
-              ),
-              Center(
-                child: ElevatedButton.icon(
-                    style: ElevatedButton.styleFrom(
-                        shape: StadiumBorder(), primary: MyThemeData.white),
-                    onPressed: onClickMap,
-                    icon: FaIcon(
-                      FontAwesomeIcons.search,
-                      color: MyThemeData.black,
-                    ),
-                    label: Text(
-                      'What are you looking for?',
-                      style: TextStyle(color: MyThemeData.black),
-                    )),
-              ),
-            ]),
+          children: [Expanded(
+            child:Stack(
+              alignment: AlignmentDirectional.topCenter,
+                children: [
+            Center(
+              child: TextButton(
+                  onPressed: onClickMap,
+                  child: Image.asset('assets/images/map.png')),
+            ),
+            ElevatedButton.icon(
+                  style: ElevatedButton.styleFrom(
+                      shape: StadiumBorder(), primary: MyThemeData.white),
+                  onPressed: onClickMap,
+                  icon: FaIcon(
+                    FontAwesomeIcons.search,
+                    color: MyThemeData.black,
+                  ),
+                  label: Text(
+                    'What are you looking for?',
+                    style: TextStyle(color: MyThemeData.black),
+                  )),
+          ]), ),
+
             Container(
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
