@@ -40,14 +40,12 @@ class ChatScreenState extends State<ChatScreen> {
               SizedBox(
                 width: 20.0,
               ),
-             Text(name1)
+             Text('Adham Hifnawy',style: GoogleFonts.raleway(color: MyThemeData.white),)
             
             ],
           ),
         ),
-        body: Padding(
-          padding: EdgeInsets.all(20.0),
-          child: Column(
+        body: Column(
             children: [
               MessageStreamBuilder(),
               Container(
@@ -91,7 +89,7 @@ class ChatScreenState extends State<ChatScreen> {
               ),
             ],
           ),
-        ));
+        );
   }
   getWorkerData() async {
     FirebaseFirestore.instance

@@ -10,8 +10,9 @@ class LocationService {
     if (!_serviceEnabled) {
       _serviceEnabled = await location.requestService();
       if (!_serviceEnabled) {
-        throw Exception();
+        print('error');
       }
+
     }
 
     _permissionGranted = await location.hasPermission();
@@ -25,4 +26,5 @@ class LocationService {
     _locationData = await location.getLocation();
     return _locationData;
   }
+
 }

@@ -19,7 +19,6 @@ class MapScreen extends StatefulWidget {
 class _MapScreenState extends State<MapScreen> {
   Completer<GoogleMapController> _controller = Completer();
   Set<Marker> _markers = {};
-  Set<Polyline> _polylines = {};
   String name = '',
       phoneNumber = '',
       work = '',
@@ -124,7 +123,7 @@ class _MapScreenState extends State<MapScreen> {
                 onMapCreated: (controller) => _controller.complete(controller),
                 onCameraMove: (e) => currentLocation = e.target,
                 markers: _markers,
-                polylines: _polylines),
+                ),
             SizedBox(
               width: 40,
               height: 40,

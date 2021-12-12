@@ -22,10 +22,44 @@ class _CategoryScreenState extends State<CategoryScreen> {
   String message = 'Message';
   String comments = 'Comments';
   String rate = 'Rate';
-  String name ='', work = '', name1 = '', work1 = '', name2 = '', work2 = '';
+  String name = '',
+      work = '',
+      name1 = '',
+      work1 = '',
+      name2 = '',
+      work2 = '';
 
+  getWorkerData() {
+    FirebaseFirestore.instance
+        .collection('workers')
+        .doc('LmsUAVZFwVtW7NuD1fch')
+        .get()
+        .then((DocumentSnapshot documentSnapshot) async {
+      print('Document data: ${documentSnapshot.data()}');
+      work = documentSnapshot['work'];
+      name = documentSnapshot['name'];
+    });
+    FirebaseFirestore.instance
+        .collection('workers')
+        .doc('JhgzxmodhGc3asRNZnVO')
+        .get()
+        .then((DocumentSnapshot documentSnapshot) async {
+      print('Document data: ${documentSnapshot.data()}');
+      work1 = documentSnapshot['work'];
+      name1 = documentSnapshot['name'];
+    });
+    FirebaseFirestore.instance
+        .collection('workers')
+        .doc('WtjVrBmgtkDNH0J6OGsj')
+        .get()
+        .then((DocumentSnapshot documentSnapshot) async {
+      print('Document data: ${documentSnapshot.data()}');
+      this. work2 = documentSnapshot['work'];
+      this.name2 = documentSnapshot['name'];
+    });
+  }
   @override
-   void initState() {
+  void initState() {
     super.initState();
     getWorkerData();
   }
@@ -64,7 +98,7 @@ class _CategoryScreenState extends State<CategoryScreen> {
                           CircleAvatar(
                             radius: 40.0,
                             backgroundImage:
-                                AssetImage('assets/images/carpenter.png'),
+                            AssetImage('assets/images/carpenter.png'),
                           ),
                           Text(
                             work,
@@ -77,7 +111,7 @@ class _CategoryScreenState extends State<CategoryScreen> {
                       Column(
                         children: [
                           Text(
-                            name,
+                            name1,
                             style: GoogleFonts.raleway(
                                 fontSize: 15, color: MyThemeData.lightBlue),
                           ),
@@ -118,7 +152,7 @@ class _CategoryScreenState extends State<CategoryScreen> {
                       Spacer(),
                       GestureDetector(
                         onTap: getPhoneNumber,
-                        child: Icon(Icons.call),
+                        child: Icon(Icons.call, color: MyThemeData.lightBlue,),
                       )
                     ],
                   ),
@@ -134,7 +168,7 @@ class _CategoryScreenState extends State<CategoryScreen> {
                           CircleAvatar(
                             radius: 40.0,
                             backgroundImage:
-                                AssetImage('assets/images/carpenter.png'),
+                            AssetImage('assets/images/carpenter.png'),
                           ),
                           Text(
                             work1,
@@ -147,7 +181,7 @@ class _CategoryScreenState extends State<CategoryScreen> {
                       Column(
                         children: [
                           Text(
-                            name1,
+                            name,
                             style: GoogleFonts.raleway(
                                 fontSize: 15, color: MyThemeData.lightBlue),
                           ),
@@ -188,7 +222,7 @@ class _CategoryScreenState extends State<CategoryScreen> {
                       Spacer(),
                       GestureDetector(
                         onTap: getPhoneNumber,
-                        child: Icon(Icons.call),
+                        child: Icon(Icons.call, color: MyThemeData.lightBlue,),
                       )
                     ],
                   ),
@@ -204,7 +238,7 @@ class _CategoryScreenState extends State<CategoryScreen> {
                           CircleAvatar(
                             radius: 40.0,
                             backgroundImage:
-                                AssetImage('assets/images/carpenter.png'),
+                            AssetImage('assets/images/carpenter.png'),
                           ),
                           Text(
                             work2,
@@ -247,15 +281,17 @@ class _CategoryScreenState extends State<CategoryScreen> {
                           RatingBar.builder(
                             initialRating: rating3,
                             minRating: 1,
-                            itemBuilder: (context, _) => Icon(
-                              Icons.star,
-                              color: Colors.amber,
-                            ),
+                            itemBuilder: (context, _) =>
+                                Icon(
+                                  Icons.star,
+                                  color: Colors.amber,
+                                ),
                             updateOnDrag: true,
                             itemSize: 20,
-                            onRatingUpdate: (rating) => setState(() {
-                              this.rating3 = rating;
-                            }),
+                            onRatingUpdate: (rating) =>
+                                setState(() {
+                                  this.rating3 = rating;
+                                }),
                           ),
                           GestureDetector(
                             onTap: onClickComments,
@@ -270,7 +306,7 @@ class _CategoryScreenState extends State<CategoryScreen> {
                       Spacer(),
                       GestureDetector(
                         onTap: getPhoneNumber,
-                        child: Icon(Icons.call),
+                        child: Icon(Icons.call, color: MyThemeData.lightBlue,),
                       )
                     ],
                   ),
@@ -286,7 +322,7 @@ class _CategoryScreenState extends State<CategoryScreen> {
                           CircleAvatar(
                             radius: 40.0,
                             backgroundImage:
-                                AssetImage('assets/images/carpenter.png'),
+                            AssetImage('assets/images/carpenter.png'),
                           ),
                           Text(
                             'Carpenter',
@@ -329,15 +365,17 @@ class _CategoryScreenState extends State<CategoryScreen> {
                           RatingBar.builder(
                             initialRating: rating3,
                             minRating: 1,
-                            itemBuilder: (context, _) => Icon(
-                              Icons.star,
-                              color: Colors.amber,
-                            ),
+                            itemBuilder: (context, _) =>
+                                Icon(
+                                  Icons.star,
+                                  color: Colors.amber,
+                                ),
                             updateOnDrag: true,
                             itemSize: 20,
-                            onRatingUpdate: (rating) => setState(() {
-                              this.rating3 = rating;
-                            }),
+                            onRatingUpdate: (rating) =>
+                                setState(() {
+                                  this.rating3 = rating;
+                                }),
                           ),
                           GestureDetector(
                             onTap: onClickComments,
@@ -352,7 +390,7 @@ class _CategoryScreenState extends State<CategoryScreen> {
                       Spacer(),
                       GestureDetector(
                         onTap: getPhoneNumber,
-                        child: Icon(Icons.call),
+                        child: Icon(Icons.call, color: MyThemeData.lightBlue,),
                       )
                     ],
                   ),
@@ -368,7 +406,7 @@ class _CategoryScreenState extends State<CategoryScreen> {
                           CircleAvatar(
                             radius: 40.0,
                             backgroundImage:
-                                AssetImage('assets/images/carpenter.png'),
+                            AssetImage('assets/images/carpenter.png'),
                           ),
                           Text(
                             'Carpenter',
@@ -411,15 +449,17 @@ class _CategoryScreenState extends State<CategoryScreen> {
                           RatingBar.builder(
                             initialRating: rating3,
                             minRating: 1,
-                            itemBuilder: (context, _) => Icon(
-                              Icons.star,
-                              color: Colors.amber,
-                            ),
+                            itemBuilder: (context, _) =>
+                                Icon(
+                                  Icons.star,
+                                  color: Colors.amber,
+                                ),
                             updateOnDrag: true,
                             itemSize: 20,
-                            onRatingUpdate: (rating) => setState(() {
-                              this.rating3 = rating;
-                            }),
+                            onRatingUpdate: (rating) =>
+                                setState(() {
+                                  this.rating3 = rating;
+                                }),
                           ),
                           GestureDetector(
                             onTap: onClickComments,
@@ -434,7 +474,7 @@ class _CategoryScreenState extends State<CategoryScreen> {
                       Spacer(),
                       GestureDetector(
                         onTap: getPhoneNumber,
-                        child: Icon(Icons.call),
+                        child: Icon(Icons.call, color: MyThemeData.lightBlue,),
                       )
                     ],
                   ),
@@ -450,7 +490,7 @@ class _CategoryScreenState extends State<CategoryScreen> {
                           CircleAvatar(
                             radius: 40.0,
                             backgroundImage:
-                                AssetImage('assets/images/carpenter.png'),
+                            AssetImage('assets/images/carpenter.png'),
                           ),
                           Text(
                             'Carpenter',
@@ -493,15 +533,17 @@ class _CategoryScreenState extends State<CategoryScreen> {
                           RatingBar.builder(
                             initialRating: rating3,
                             minRating: 1,
-                            itemBuilder: (context, _) => Icon(
-                              Icons.star,
-                              color: Colors.amber,
-                            ),
+                            itemBuilder: (context, _) =>
+                                Icon(
+                                  Icons.star,
+                                  color: Colors.amber,
+                                ),
                             updateOnDrag: true,
                             itemSize: 20,
-                            onRatingUpdate: (rating) => setState(() {
-                              this.rating3 = rating;
-                            }),
+                            onRatingUpdate: (rating) =>
+                                setState(() {
+                                  this.rating3 = rating;
+                                }),
                           ),
                           GestureDetector(
                             onTap: onClickComments,
@@ -516,7 +558,7 @@ class _CategoryScreenState extends State<CategoryScreen> {
                       Spacer(),
                       GestureDetector(
                         onTap: getPhoneNumber,
-                        child: Icon(Icons.call),
+                        child: Icon(Icons.call, color: MyThemeData.lightBlue,),
                       )
                     ],
                   ),
@@ -532,7 +574,7 @@ class _CategoryScreenState extends State<CategoryScreen> {
                           CircleAvatar(
                             radius: 40.0,
                             backgroundImage:
-                                AssetImage('assets/images/carpenter.png'),
+                            AssetImage('assets/images/carpenter.png'),
                           ),
                           Text(
                             'Carpenter',
@@ -575,15 +617,17 @@ class _CategoryScreenState extends State<CategoryScreen> {
                           RatingBar.builder(
                             initialRating: rating3,
                             minRating: 1,
-                            itemBuilder: (context, _) => Icon(
-                              Icons.star,
-                              color: Colors.amber,
-                            ),
+                            itemBuilder: (context, _) =>
+                                Icon(
+                                  Icons.star,
+                                  color: Colors.amber,
+                                ),
                             updateOnDrag: true,
                             itemSize: 20,
-                            onRatingUpdate: (rating) => setState(() {
-                              this.rating3 = rating;
-                            }),
+                            onRatingUpdate: (rating) =>
+                                setState(() {
+                                  this.rating3 = rating;
+                                }),
                           ),
                           GestureDetector(
                             onTap: onClickComments,
@@ -598,7 +642,7 @@ class _CategoryScreenState extends State<CategoryScreen> {
                       Spacer(),
                       GestureDetector(
                         onTap: getPhoneNumber,
-                        child: Icon(Icons.call),
+                        child: Icon(Icons.call, color: MyThemeData.lightBlue,),
                       )
                     ],
                   ),
@@ -614,7 +658,7 @@ class _CategoryScreenState extends State<CategoryScreen> {
                           CircleAvatar(
                             radius: 40.0,
                             backgroundImage:
-                                AssetImage('assets/images/carpenter.png'),
+                            AssetImage('assets/images/carpenter.png'),
                           ),
                           Text(
                             'Carpenter',
@@ -657,15 +701,17 @@ class _CategoryScreenState extends State<CategoryScreen> {
                           RatingBar.builder(
                             initialRating: rating3,
                             minRating: 1,
-                            itemBuilder: (context, _) => Icon(
-                              Icons.star,
-                              color: Colors.amber,
-                            ),
+                            itemBuilder: (context, _) =>
+                                Icon(
+                                  Icons.star,
+                                  color: Colors.amber,
+                                ),
                             updateOnDrag: true,
                             itemSize: 20,
-                            onRatingUpdate: (rating) => setState(() {
-                              this.rating3 = rating;
-                            }),
+                            onRatingUpdate: (rating) =>
+                                setState(() {
+                                  this.rating3 = rating;
+                                }),
                           ),
                           GestureDetector(
                             onTap: onClickComments,
@@ -680,7 +726,7 @@ class _CategoryScreenState extends State<CategoryScreen> {
                       Spacer(),
                       GestureDetector(
                         onTap: getPhoneNumber,
-                        child: Icon(Icons.call),
+                        child: Icon(Icons.call, color: MyThemeData.lightBlue,),
                       )
                     ],
                   ),
@@ -696,7 +742,7 @@ class _CategoryScreenState extends State<CategoryScreen> {
                           CircleAvatar(
                             radius: 40.0,
                             backgroundImage:
-                                AssetImage('assets/images/carpenter.png'),
+                            AssetImage('assets/images/carpenter.png'),
                           ),
                           Text(
                             'Carpenter',
@@ -739,15 +785,17 @@ class _CategoryScreenState extends State<CategoryScreen> {
                           RatingBar.builder(
                             initialRating: rating3,
                             minRating: 1,
-                            itemBuilder: (context, _) => Icon(
-                              Icons.star,
-                              color: Colors.amber,
-                            ),
+                            itemBuilder: (context, _) =>
+                                Icon(
+                                  Icons.star,
+                                  color: Colors.amber,
+                                ),
                             updateOnDrag: true,
                             itemSize: 20,
-                            onRatingUpdate: (rating) => setState(() {
-                              this.rating3 = rating;
-                            }),
+                            onRatingUpdate: (rating) =>
+                                setState(() {
+                                  this.rating3 = rating;
+                                }),
                           ),
                           GestureDetector(
                             onTap: onClickComments,
@@ -762,7 +810,7 @@ class _CategoryScreenState extends State<CategoryScreen> {
                       Spacer(),
                       GestureDetector(
                         onTap: getPhoneNumber,
-                        child: Icon(Icons.call),
+                        child: Icon(Icons.call, color: MyThemeData.lightBlue,),
                       )
                     ],
                   ),
@@ -778,7 +826,7 @@ class _CategoryScreenState extends State<CategoryScreen> {
                           CircleAvatar(
                             radius: 40.0,
                             backgroundImage:
-                                AssetImage('assets/images/carpenter.png'),
+                            AssetImage('assets/images/carpenter.png'),
                           ),
                           Text(
                             'Carpenter',
@@ -821,15 +869,17 @@ class _CategoryScreenState extends State<CategoryScreen> {
                           RatingBar.builder(
                             initialRating: rating3,
                             minRating: 1,
-                            itemBuilder: (context, _) => Icon(
-                              Icons.star,
-                              color: Colors.amber,
-                            ),
+                            itemBuilder: (context, _) =>
+                                Icon(
+                                  Icons.star,
+                                  color: Colors.amber,
+                                ),
                             updateOnDrag: true,
                             itemSize: 20,
-                            onRatingUpdate: (rating) => setState(() {
-                              this.rating3 = rating;
-                            }),
+                            onRatingUpdate: (rating) =>
+                                setState(() {
+                                  this.rating3 = rating;
+                                }),
                           ),
                           GestureDetector(
                             onTap: onClickComments,
@@ -844,7 +894,7 @@ class _CategoryScreenState extends State<CategoryScreen> {
                       Spacer(),
                       GestureDetector(
                         onTap: getPhoneNumber,
-                        child: Icon(Icons.call),
+                        child: Icon(Icons.call, color: MyThemeData.lightBlue,),
                       )
                     ],
                   ),
@@ -856,31 +906,38 @@ class _CategoryScreenState extends State<CategoryScreen> {
         ));
   }
 
-  Widget buildRating() => RatingBar.builder(
+  Widget buildRating() =>
+      RatingBar.builder(
         initialRating: rating,
         minRating: 1,
-        itemBuilder: (context, _) => Icon(
-          Icons.star,
-          color: Colors.amber,
-        ),
+        itemBuilder: (context, _) =>
+            Icon(
+              Icons.star,
+              color: Colors.amber,
+            ),
         updateOnDrag: true,
         itemSize: 20,
-        onRatingUpdate: (rating) => setState(() {
-          this.rating = rating;
-        }),
+        onRatingUpdate: (rating) =>
+            setState(() {
+              this.rating = rating;
+            }),
       );
-  Widget buildRating2() => RatingBar.builder(
+
+  Widget buildRating2() =>
+      RatingBar.builder(
         initialRating: rating2,
         minRating: 1,
-        itemBuilder: (context, _) => Icon(
-          Icons.star,
-          color: Colors.amber,
-        ),
+        itemBuilder: (context, _) =>
+            Icon(
+              Icons.star,
+              color: Colors.amber,
+            ),
         updateOnDrag: true,
         itemSize: 20,
-        onRatingUpdate: (rating) => setState(() {
-          this.rating2 = rating;
-        }),
+        onRatingUpdate: (rating) =>
+            setState(() {
+              this.rating2 = rating;
+            }),
       );
   final dp = FirebaseFirestore.instance;
 
@@ -909,95 +966,70 @@ class _CategoryScreenState extends State<CategoryScreen> {
     Navigator.pushNamed(context, CommentsScreen.routeName);
   }
 
-  showRating() => showDialog(
-      context: context,
-      builder: (context) => AlertDialog(
-            title: Text(
-              'Say your Opinion',
-              style: GoogleFonts.raleway(
-                  fontSize: 15, color: MyThemeData.lightBlue),
-            ),
-            content: Column(
-              crossAxisAlignment: CrossAxisAlignment.center,
-              mainAxisSize: MainAxisSize.min,
-              children: [
-                Text(
-                  'Please, Leave a Star Rating',
+  showRating() =>
+      showDialog(
+          context: context,
+          builder: (context) =>
+              AlertDialog(
+                title: Text(
+                  'Say your Opinion',
                   style: GoogleFonts.raleway(
                       fontSize: 15, color: MyThemeData.lightBlue),
                 ),
-                buildRating(),
-              ],
-            ),
-            actions: [
-              TextButton(
-                  onPressed: () => Navigator.pop(context),
-                  child: Text(
-                    'Submit',
-                    style: GoogleFonts.raleway(
-                        fontSize: 15, color: MyThemeData.lightBlue),
-                  ))
-            ],
-          ));
+                content: Column(
+                  crossAxisAlignment: CrossAxisAlignment.center,
+                  mainAxisSize: MainAxisSize.min,
+                  children: [
+                    Text(
+                      'Please, Leave a Star Rating',
+                      style: GoogleFonts.raleway(
+                          fontSize: 15, color: MyThemeData.lightBlue),
+                    ),
+                    buildRating(),
+                  ],
+                ),
+                actions: [
+                  TextButton(
+                      onPressed: () => Navigator.pop(context),
+                      child: Text(
+                        'Submit',
+                        style: GoogleFonts.raleway(
+                            fontSize: 15, color: MyThemeData.lightBlue),
+                      ))
+                ],
+              ));
 
-  void showRating2() => showDialog(
-      context: context,
-      builder: (context) => AlertDialog(
-            title: Text(
-              'Say your Opinion',
-              style: GoogleFonts.raleway(
-                  fontSize: 15, color: MyThemeData.lightBlue),
-            ),
-            content: Column(
-              crossAxisAlignment: CrossAxisAlignment.center,
-              mainAxisSize: MainAxisSize.min,
-              children: [
-                Text(
-                  'Please, Leave a Star Rating',
+  void showRating2() {
+      showDialog(
+          context: context,
+          builder: (context) =>
+              AlertDialog(
+                title: Text(
+                  'Say your Opinion',
                   style: GoogleFonts.raleway(
                       fontSize: 15, color: MyThemeData.lightBlue),
                 ),
-                buildRating2(),
-              ],
-            ),
-            actions: [
-              TextButton(
-                  onPressed: () => Navigator.pop(context),
-                  child: Text(
-                    'Submit',
-                    style: GoogleFonts.raleway(
-                        fontSize: 15, color: MyThemeData.lightBlue),
-                  ))
-            ],
-          ));
-
-  getWorkerData() {
-    FirebaseFirestore.instance
-        .collection('workers')
-        .doc('LmsUAVZFwVtW7NuD1fch')
-        .get()
-        .then((DocumentSnapshot documentSnapshot) async {
-      print('Document data: ${documentSnapshot.data()}');
-      work = documentSnapshot['work'];
-      name = documentSnapshot['name'];
-    });
-    FirebaseFirestore.instance
-        .collection('workers')
-        .doc('JhgzxmodhGc3asRNZnVO')
-        .get()
-        .then((DocumentSnapshot documentSnapshot) async {
-      print('Document data: ${documentSnapshot.data()}');
-      work1 = documentSnapshot['work'];
-      name1 = documentSnapshot['name'];
-    });
-    FirebaseFirestore.instance
-        .collection('workers')
-        .doc('WtjVrBmgtkDNH0J6OGsj')
-        .get()
-        .then((DocumentSnapshot documentSnapshot) async {
-      print('Document data: ${documentSnapshot.data()}');
-     this. work2 = documentSnapshot['work'];
-      this.name2 = documentSnapshot['name'];
-    });
-  }
+                content: Column(
+                  crossAxisAlignment: CrossAxisAlignment.center,
+                  mainAxisSize: MainAxisSize.min,
+                  children: [
+                    Text(
+                      'Please, Leave a Star Rating',
+                      style: GoogleFonts.raleway(
+                          fontSize: 15, color: MyThemeData.lightBlue),
+                    ),
+                    buildRating2(),
+                  ],
+                ),
+                actions: [
+                  TextButton(
+                      onPressed: () => Navigator.pop(context),
+                      child: Text(
+                        'Submit',
+                        style: GoogleFonts.raleway(
+                            fontSize: 15, color: MyThemeData.lightBlue),
+                      ))
+                ],
+              ));
+}
 }
